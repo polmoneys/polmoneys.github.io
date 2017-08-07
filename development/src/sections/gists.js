@@ -7,10 +7,8 @@ let gridCtn = css({
   width: "100%",
   gridTemplateColumns: " 1fr ",
   "@media(min-width: 1024px)": {
-    height: "90vh",
-    marginBottom:'10vh',
-    gridTemplateColumns: " 1fr 1fr 1fr 1fr",
-    gridTemplateRows: " 1fr 1fr"
+    height: "60vh",
+    gridTemplateColumns: " 33.33% 33.33% 33.33%",
   }
 });
 
@@ -23,37 +21,34 @@ let item = css({
   boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
    fontWeight:'700',
     fontSize:'4vw',
+    textAlign:'center',
+    display:'flex',
+    justifyContent:'center',
+    alignItems:'center'
   // "@media(min-width: 1024px)": {
   //   backgroundColor: "#444",
   //   color: "#fff"
   // }
 });
 let alphas = css({
-  gridColumn: "1 / 1 ",
-  //   backgroundImage: 'linear-gradient(to top, #ebc0fd 0%, #d9ded8 100%)',
-  "@media(min-width: 1024px)": {
-    gridColumn: "1 / span 4"
-    //  backgroundBlendMode:'none',
-    // backgroundImage:'none',
-  }
+  gridColumn: "1 / span 1 ",
+ 
 });
 let betas = css({
-  gridColumn: "1 / 1",
-  //   backgroundImage: 'linear-gradient(to top, #ebc0fd 0%, #d9ded8 100%)',
+  gridColumn: " 1 / span 1 ",
+  gridRow: " 2",
   "@media(min-width: 1024px)": {
-    // backgroundImage:'none',
-    gridColumn: "1 / span 2",
-    gridRow: " 2"
+   gridColumn: " 2 / span 1 ",
+    gridRow: " 1"
   }
 });
 
 let chis = css({
-  gridColumn: "1 / 1",
-  //   backgroundImage: 'linear-gradient(to top, #ebc0fd 0%, #d9ded8 100%)',
+  gridColumn: "1 / span 1 ",
+    gridRow: "3",
   "@media(min-width: 1024px)": {
-    // backgroundImage:'none',
-    gridRow: "2",
-    gridColumn: "3 / span 2"
+    gridRow: "1",
+  gridColumn: "3 / span 1 ",
   }
 });
 
@@ -87,7 +82,7 @@ const doSomething = () => console.log('hi')
       // <p class="${label}"> Javascript </p>
 
 const Alpha = `<a href='https://gist.github.com/polmoneys/b51ffa056c110bbbe3e7b35c8389b4f8' class=" ${alphas} ${item}" target='_blank' rel="noopener">
-      <p>Gist: Javascript cheat sheet </p>
+      <p>JS Cheat Sheet </p>
       </a>`;
 
       //      <p class="${quick}"> Quick Start </p>
@@ -95,7 +90,7 @@ const Alpha = `<a href='https://gist.github.com/polmoneys/b51ffa056c110bbbe3e7b3
     //  <p class="${label}">  React </p>
       
 const Beta = `<a href='https://gist.github.com/polmoneys/05353d9f595444b6ee8ded0f1816452e' class=" ${betas} ${item}" target='_blank' rel="noopener">
-        <p>Gist: Little snippets </p>
+        <p>Snippets </p>
 </a>`;
 
     // <p class="${quick}">  Quick Start </p>
@@ -103,7 +98,7 @@ const Beta = `<a href='https://gist.github.com/polmoneys/05353d9f595444b6ee8ded0
       // <p class="${label}">  React Native </p>
     
 const Chi = `<a href='https://gist.github.com/polmoneys/ceb1d075b1d5e1df3f2666748f00bcdf' class=" ${chis} ${item}" target='_blank' rel="noopener">
-        <p>Gist: Css icons </p>
+        <p>Quick icons </p>
 </a>`;
 
 const Gists = () =>

@@ -18,7 +18,7 @@ const App = () =>
   ${Interface()}
   </div>
    ${Hero}
-  <div class="app-ctn">
+  <div class="app-ctn-with-height">
   ${Gists()}
   </div>`;
   

@@ -87,7 +87,7 @@ const doSomething = () => console.log('hi')
       // <p class="${label}"> Javascript </p>
 
 const Alpha = `<a href='https://github.com/polmoneys/mvj' class=" ${alphas} ${item}" target='_blank' rel="noopener">
-      <p>Slow dance with Webpack, es6, css grid layout, css-in-js ...  </p>
+      <p>Slow dance with Webpack, css grid layout, css-in-js...  </p>
       </a>`;
 
       //      <p class="${quick}"> Quick Start </p>
@@ -95,7 +95,7 @@ const Alpha = `<a href='https://github.com/polmoneys/mvj' class=" ${alphas} ${it
     //  <p class="${label}">  React </p>
       
 const Beta = `<a href='https://github.com/polmoneys/TvrboReact' class=" ${betas} ${item}" target='_blank' rel="noopener">
-        <p>Onboard new team members at work. </p>
+        <p>Onboard new team members at work </p>
 </a>`;
 
     // <p class="${quick}">  Quick Start </p>

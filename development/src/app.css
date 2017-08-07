@@ -47,6 +47,16 @@ body {
   margin:5vh auto;
 }
 
+.app-ctn-with-height{
+  width:90vw;
+  max-width:1000px;
+  margin:5vh auto;
+  height:90vh;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+}
+
 .grid > a > * + * {
   margin-top: 2rem;
 }
