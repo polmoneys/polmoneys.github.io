@@ -15,17 +15,18 @@ let gridCtn = css({
 });
 
 let item = css({
-  backgroundColor: "#f5f5f5",
-  color: "#444",
+  backgroundColor: "#f8e4ec",
+  color: "#d94465",
   padding: "2rem",
-  fontSize: " 150%",
   position: "relative",
   textDecoration:'none',
   boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)",
-  "@media(min-width: 1024px)": {
-    backgroundColor: "#444",
-    color: "#fff"
-  }
+   fontWeight:'700',
+    fontSize:'4vw',
+  // "@media(min-width: 1024px)": {
+  //   backgroundColor: "#444",
+  //   color: "#fff"
+  // }
 });
 let alphas = css({
   gridColumn: "1 / 1 ",
@@ -59,12 +60,16 @@ let chis = css({
 let label = css({
   display: "inline-block",
   padding:'1vh 2vw',
-    backgroundColor: "rgba(0,0,0,.2)",
+    // backgroundColor: "rgba(0,0,0,.2)",
+    backgroundColor:'#f8e4ec',
+    // fontWeight:'200',
+    fontSize:'1rem',
+    color:"#d94465",
+    textTransform:'uppercase',
   "@media(min-width: 1024px)": {
     left: "2vw",
     bottom: "2vh",
     position: "absolute",
-    // backgroundColor: "pink",
   }
 });
 
@@ -74,28 +79,31 @@ let quick = css({
 })
 
 
+
 const doSomething = () => console.log('hi') 
 
+      // <p class="${quick}"> Quick Start </p>
+      // <p>git clone && npm i && npm Quick start </p>
+      // <p class="${label}"> Javascript </p>
 
 const Alpha = `<a href='https://github.com/polmoneys/mvj' class=" ${alphas} ${item}" target='_blank' rel="noopener">
-      <p>MVJ is my minimal-viable-javascript-boiler for small projects. It explores Webpack, es6, css-in-js and whatever pattern I'm dancing with.  </p>
-      <p class="${quick}"> Quick Start </p>
-      <p>git clone && npm i && npm Quick start </p>
-      <p class="${label}"> Javascript </p>
+      <p>Slow dance with Webpack, es6, css grid layout, css-in-js ...  </p>
       </a>`;
 
+      //      <p class="${quick}"> Quick Start </p>
+      // <p>git clone && npm i && make dev </p>
+    //  <p class="${label}">  React </p>
+      
 const Beta = `<a href='https://github.com/polmoneys/TvrboReact' class=" ${betas} ${item}" target='_blank' rel="noopener">
-        <p>TvrboReact is our current boiler at work. This fork includes components and make it easier to onboard new team members.  </p>
-     <p class="${quick}"> Quick Start </p>
-      <p>git clone && npm i && make dev </p>
-     <p class="${label}">  React </p>
+        <p>Onboard new team members at work. </p>
 </a>`;
 
+    // <p class="${quick}">  Quick Start </p>
+    //   <p>git clone && npm i && npm run ios </p>
+      // <p class="${label}">  React Native </p>
+    
 const Chi = `<a href='https://github.com/polmoneys/rn-boiler' class=" ${chis} ${item}" target='_blank' rel="noopener">
-        <p>A repo for playing and testing components, interactions and patterns. </p>
-    <p class="${quick}">  Quick Start </p>
-      <p>git clone && npm i && npm run ios </p>
-      <p class="${label}">  React Native </p>
+        <p>React Native tips </p>
 </a>`;
 
 const Interface = () =>

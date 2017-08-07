@@ -1,6 +1,7 @@
 import spinnerstyles from "./parts/spinner.css";
 import appstyles from "./app.css";
 import { Interface } from "./sections/projects";
+import { Gists } from "./sections/gists";
 import { Hero } from "./sections/hero";
 // import { Intro } from "./sections/intro";
 
@@ -16,7 +17,10 @@ const App = () =>
   `<div class="app-ctn">
   ${Interface()}
   </div>
-   ${Hero}`;
+   ${Hero}
+  <div class="app-ctn">
+  ${Gists()}
+  </div>`;
   
 
 document.addEventListener("DOMContentLoaded", function() {
