@@ -240,29 +240,25 @@ class CreateBug extends Component {
   render() {
 
     return (
-      &lt;Editor&gt;
-
-        &lt;Devices&gt;
-            &lt;Iphone
-            pressed={this.state.device == "phone"}
-            onClick={() => this.setState({ device: "phone" })}
-          /&gt;
-            &lt;Tablet
-            pressed={this.state.device == "tablet"}
-            onClick={() => this.setState({ device: "tablet" })}
-          /&gt;
-            &lt;Tablet
-            pressed={this.state.device == "tablet-landscape"}
-            onClick={() => this.setState({ device: "tablet-landscape" })}
-            landscape
-          /&gt;
-            &lt;Desktop
-            pressed={this.state.device == "desktop"}
-            onClick={() => this.setState({ device: "desktop" })}
-          /&gt;
-        &lt;/Devices&gt;
-
-      &lt;Editor/&gt;
+      &lt;Devices&gt;
+          &lt;Iphone
+          pressed={this.state.device == "phone"}
+          onClick={() => this.setState({ device: "phone" })}
+        /&gt;
+          &lt;Tablet
+          pressed={this.state.device == "tablet"}
+          onClick={() => this.setState({ device: "tablet" })}
+        /&gt;
+          &lt;Tablet
+          pressed={this.state.device == "tablet-landscape"}
+          onClick={() => this.setState({ device: "tablet-landscape" })}
+          landscape
+        /&gt;
+          &lt;Desktop
+          pressed={this.state.device == "desktop"}
+          onClick={() => this.setState({ device: "desktop" })}
+        /&gt;
+      &lt;/Devices&gt;
     )
   }
 }   

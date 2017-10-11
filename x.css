@@ -76,7 +76,8 @@ p{
     margin:0 auto;
     background-color: rgb(35, 33, 46);
     border-radius:.2rem;
-    padding:1rem;
+    padding:1rem .5rem;
+    font-size:1.2rem;
   }
   .c{
    color: #92ead3;
