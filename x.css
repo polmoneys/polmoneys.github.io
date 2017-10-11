@@ -6,8 +6,6 @@
 }
 
 html {
-  font-family: sans-serif;
-  line-height: 1.15;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   -ms-overflow-style: scrollbar;
@@ -26,17 +24,16 @@ html {
 
 
 body {
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-	font-size: 1rem;
+	font-size: 1.5rem;
   font-weight: normal;
   line-height: 1.5;
   color: #444;
   background-color: #fff;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   text-rendering: optimizeLegibility;
-
   font-family: 'Fira Sans', sans-serif;
+  padding:.6rem;
 }
 
 img {
@@ -50,27 +47,36 @@ img {
   max-width: 100%;
 }
 
+.screenshot{
+display: block;
+margin:2rem auto;
+}
+
 svg:not(:root) {
   overflow: hidden;
 }
 
-
-.tip{
-    opacity:.5;
-    margin:5vh 0;
+.txt-bold{
+  font-weight:700;
 }
- 
+p{
+  display: block;
+  max-width: 700px;
+  margin:1rem auto;
+}
   code{
     display: block;
     width:100%;
+    margin:10vh auto;
 
   }
   pre{
     width:100%;
-    max-width: 600px;
+    max-width: 900px;
     margin:0 auto;
-    background-color: rgb(41, 39, 49);
-   color: #92ead3;
+    background-color: rgb(35, 33, 46);
+    border-radius:.2rem;
+    padding:1rem;
   }
   .c{
    color: #92ead3;

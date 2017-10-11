@@ -9,342 +9,364 @@
 </head>
 
 <body>
-
+<p class="txt-bold">THIS IS A WORK IN PROGRESS. NOT READY FOR PUBLIC EXPOSURE.</p>
 <p>What a time to be alive.</p>
-<p>I've ditched CSS for styled components and couldn't be happier. This is my current flow, thought I'd share it with you.</p>
+<p>I've ditched CSS for <a href="http://styled-components.com">styled components</a> and couldn't be happier. This is my current flow, thought I'd share it with you.</p>
 
 <p>TLDR;</p>
 <p>* Props are King </p>
 <p>* Components and styles in the same file </p>
+<p>* Readable and thin return() from render() </p>
 
-
-
-
-<div class="tip">
-<p>Pull your fav react boilerplate (create react app for example), fire your terminal and: </p>
-<code>
-  <pre>
-  $ npm i styled-components
-</pre>
-</code>
-</div>
-
-
-
-<p>The most simple #win I can think of is against rainbow text designers.</p>
-<p>Props are javascript truth so trying to bridge it with css is kind of clumsy, styled components solve glues it sensationally.  </p>
-
+<p>Until now the approach was a combination of utility css files (imagine divs with flexbox classes as 'col-center justify-content-center align-items-center') and react media to render chunks of markup at diferent breakpoints. It was the first step towards minimizing lenght of Css and naming classes. </p>
 
 <code>
-  <pre>
-  import styled, { css,keyframes } from 'styled-components';
-      
-  export default () => (
-    &lt;div&gt;
-    
-      &lt;Paragraph tint="red"&gt;
-        Hello World
-      &lt;/Paragraph&gt;
+<pre class="c">
+import React, { Component, PropTypes } from "react";
+import Media from 'react-media';
 
-      &lt;Paragraph uppercase&gt;
-        Hello World
-      &lt;/Paragraph&gt;
-    &lt;/div&gt;
-  )
-
-  const Paragraph = styled.p`
-    color: ${props => props.tint ? tint : '#444'};
-    text-transform: ${props => props.uppercase ? 'uppercase' : 'none'};
-  `;
-
+class App extends Component {
+  render() {
+    return (
+      &lt;Media query="(min-width: 992px)"&gt;
+        {matches =>
+          matches
+            ? &lt;div&gt;
+                &lt;Footer /&gt;
+              &lt;/div&gt;
+            : &lt;div&gt;
+                &lt;FooterMobile /&gt;
+              &lt;/div&gt;
+          }
+      &lt;/Media&gt;
+    )
+  }
+}    
 </pre>
 </code>
 
-<p>The tint prop accepts any color and fallbacks to a global/default color if not present. We are cutting classes && clutter in the render(). </p>
+<p>Props are javascript truth and styled components glues it sensationally. It makes dealing with rainbow designers easy and painless. </p>
+
+
+<code>
+<pre class="c">
+import styled, { css,keyframes } from 'styled-components';
+export default () => (
+  &lt;div&gt;
+  
+    &lt;Paragraph tint="red"&gt;
+      Hello World
+    &lt;/Paragraph&gt;
+
+    &lt;Paragraph uppercase&gt;
+      Hello &lt;Bold&gt;World&lt;/Bold&gt;
+    &lt;/Paragraph&gt;
+
+  &lt;/div&gt;
+)
+</pre>
+
+  <pre class="c-">
+const Paragraph = styled.p`
+  color: ${props => props.tint ? tint : '#444'};
+  text-transform: ${props => props.uppercase ? 'uppercase' : 'none'};
+`;
+const Bold = styled.span`
+  font-weight:bold;
+`;
+</pre>
+</code>
+
+<p>The tint prop accepts any color and fallbacks to a global/default color if not present. We are cutting classes && clutter in the return(). We can make our text bold or uppercase right here right now. </p>
 <p>Moar Lo-Fi styled components I love </p>
 
 <code>
-  <pre>
+  <pre class="c-">
+const TextEllipsis = styled.p`
+  max-width: 100%;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  word-wrap: normal !important;
+`;
 
-  const TextEllipsis = styled.p`
-    max-width: 100%;
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    white-space: nowrap !important;
-    word-wrap: normal !important;
-  `;
-
-  const VerticalText = styled.p`
-    writing-mode: vertical-lr;
-  `;
-
+const VerticalText = styled.p`
+  writing-mode: vertical-lr;
+`;
   </pre>
 </code>
 
 <p>If we transition to a more ambitious endeavour and accept the fact that the backbone of any website are links and buttons, we can go for another small effort big #win.</p>
 
-
 <code>
-  <pre>
-      
-  export default () => (
-    &lt;div&gt;
-    
-      &lt;Touchable 
-      onClick={e => console.log(e)}&gt; 
-        Normal Touchable 
-      &lt;/Touchable&gt;
+  <pre class="c">
+export default () => (
+  &lt;div&gt;
+  
+    &lt;Touchable 
+    onClick={e => console.log(e)}&gt; 
+      Normal Touchable 
+    &lt;/Touchable&gt;
 
-      &lt;TouchableBranded 
-      onClick={e => console.log(e)}&gt; 
-        Branded Touchable 
-      &lt;/TouchableBranded&gt;
+    &lt;TouchableBranded 
+    onClick={e => console.log(e)}&gt; 
+      Branded Touchable 
+    &lt;/TouchableBranded&gt;
 
-      &lt;Link href="/"&gt;
-        Normal Link 
-      &lt;/Link&gt;
+    &lt;Link href="/"&gt;
+      Normal Link 
+    &lt;/Link&gt;
 
-      &lt;LinkUnderline href="/"&gt;
-        Link with Underline 
-      &lt;/LinkUnderline&gt;
-    
-    &lt;/div&gt;
-  )
-  </pre>
-</code>
-
-<code>
-  <pre>
-  const fadeIn = keyframes`
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  `;
-
-  const Touchable = styled.button`
-    animation: 1s ${fadeIn} ease-out;
-    cursor:pointer;
-    touch-action: manipulation;
-    -webkit-appearance: button;
-    
-    & > * {
-      pointer-events: none;
-    }
-  `;
-
-  const TouchableBranded = Touchable.extend`
-    background: pink;
-    color:#fff;
- 
-    &:hover {
-      opacity:.8;
-    }
-  `;
-
-  const Link = Touchable.withComponent('a')
-
-  const LinkUnderline = Link.extend`
-    text-decoration:underline;
-  `;
-
+    &lt;LinkUnderline href="/"&gt;
+      Link with Underline 
+    &lt;/LinkUnderline&gt;
+  
+  &lt;/div&gt;
+)
 </pre>
 </code>
 
-<p>As you contemplate the Way let's consider a more ambitious piece of UI and see how can we achieve some serious flexibility and lose some Css on the way.</p>
+<p>Color variations on buttons and make links look like buttons is one of the oldest fights. Now we can win it swiftly.</p>
 
 <code>
-    <pre>
-        
+  <pre class="c-">
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
+const Touchable = styled.button`
+  animation: 1s ${fadeIn} ease-out;
+  cursor:pointer;
+  touch-action: manipulation;
+  -webkit-appearance: button;
+  
+  & > * {
+    pointer-events: none;
+  }
+`;
+
+const TouchableBranded = Touchable.extend`
+  background: pink;
+  color:#fff;
+
+  &:hover {
+    opacity:.8;
+  }
+`;
+
+const Link = Touchable.withComponent('a')
+
+const LinkUnderline = Link.extend`
+  text-decoration:underline;
+`;
+</pre>
+</code>
+<p>You could have styled the Touchables above with props but to make things a bit more clear for my teammates unless they are obvious ('uppercase') I don't mind writing a bit more. I was one of those who could never tell if a color was 'primary' or 'danger'...</p>
+
+<p>As you contemplate the Way let's consider a classic piece of UI and marvel ourselves with all the Css we can use in JS. Most of it works, we can ditch our beloved lobotomized owl selector for good.</p>
+
+<code>
+  <pre class="c">
 export default () => (
   &lt;div&gt;
     
     &lt;PopUp&gt;
-       &lt;div&gt; 
-         &lt;Placeholder/&gt; 
-       &lt;/div&gt;
-       &lt;div&gt; 
-         &lt;Placeholder/&gt;
-       &lt;/div&gt;
-       &lt;div&gt; 
-         &lt;Placeholder/&gt; 
-       &lt;/div&gt;
-     &lt;/PopUp&gt;
+      &lt;div&gt; 
+        &lt;Placeholder/&gt; 
+      &lt;/div&gt;
+      &lt;div&gt; 
+        &lt;Placeholder/&gt;
+      &lt;/div&gt;
+      &lt;div&gt; 
+        &lt;Placeholder/&gt; 
+      &lt;/div&gt;
+    &lt;/PopUp&gt;
   
-   &lt;/div&gt;
+  &lt;/div&gt;
 )  
 </pre>
-</code>
 
+  <pre class="c--">
+const foo = '.4rem';
 
-<code>
-  <pre>
-        
-  const foo = '.4rem';
+const PopUp = styled.div`
+  border-radius:${foo};
+  background: ${props => props.dark ? '#444' : '#f9f9f9'};
+  color: ${props => props.dark ? '#f9f9f9' : '#444'};
 
-  const PopUp = styled.div`
-    border-radius:${foo};
-    background: ${props => props.dark ? '#444' : '#f9f9f9'};
-    color: ${props => props.dark ? '#f9f9f9' : '#444'};
+  @media (min-width: 992px) {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+  }
 
-    @media (min-width: 992px) {
-      position:absolute;
-      top:50%;
-      left:50%;
-      transform:translate(-50%,-50%);
-    }
+  > div:not(:last-of-type) {
+    margin-bottom:1rem;
+  }
 
-    > div:not(:last-of-type) {
-      margin-bottom:1rem;
-    }
+  #crash & {
+    display: none;
+  }
 
-    #crash & {
-      display: none;
-    }
-
-    ${props =>
-      props.edit &&
-      css`
-        background-color: #777;
-      `};
-  `;
+  ${props =>
+    props.edit &&
+    css`
+      background-color: #777;
+    `};
+`;
 </pre>
 </code>
 
-<p> Cheating </p>
 
-<code>
-  <pre>
-import react media EXEMPLE DEVICES 
-</pre>
-</code>
 
 
 <p> Real World Example </p>
 
-<img src="./devices.png" />
+<img class="screenshot" src="./devices.png" />
 
 <code>
-    <pre>
-        
- &lt;Devices&gt;
-     &lt;Iphone
-      pressed={this.state.device == "phone"}
-      onClick={() => this.setState({ device: "phone" })}
-    /&gt;
-     &lt;Tablet
-      pressed={this.state.device == "tablet"}
-      onClick={() => this.setState({ device: "tablet" })}
-    /&gt;
-     &lt;Tablet
-      pressed={this.state.device == "tablet-landscape"}
-      onClick={() => this.setState({ device: "tablet-landscape" })}
-      landscape
-    /&gt;
-     &lt;Desktop
-      pressed={this.state.device == "desktop"}
-      onClick={() => this.setState({ device: "desktop" })}
-    /&gt;
- &lt;/Devices&gt;
+  <pre class="c">
+class CreateBug extends Component {
+  state = {
+    device: "phone",
+  };      
 
+  render() {
 
-  const Devices = styled.div`
-    padding: 1rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  `;
+    return (
+      &lt;Editor&gt;
 
-  const Mobile = styled.span`
-    &:before,
-    &:after {
-      position: absolute;
-      content: "";
-    }
+        &lt;Devices&gt;
+            &lt;Iphone
+            pressed={this.state.device == "phone"}
+            onClick={() => this.setState({ device: "phone" })}
+          /&gt;
+            &lt;Tablet
+            pressed={this.state.device == "tablet"}
+            onClick={() => this.setState({ device: "tablet" })}
+          /&gt;
+            &lt;Tablet
+            pressed={this.state.device == "tablet-landscape"}
+            onClick={() => this.setState({ device: "tablet-landscape" })}
+            landscape
+          /&gt;
+            &lt;Desktop
+            pressed={this.state.device == "desktop"}
+            onClick={() => this.setState({ device: "desktop" })}
+          /&gt;
+        &lt;/Devices&gt;
 
-    &:before {
-      top: 4px;
-      width: 15px;
-      height: 3px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #222;
-      border-radius: 15px;
-      background-clip: padding-box;
-    }
+      &lt;Editor/&gt;
+    )
+  }
+}   
+</pre>
 
-    &:after {
-      bottom: 4px;
-      width: 6px;
-      height: 6px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #222;
-      border-radius: 50%;
-      background-clip: padding-box;
-    }
+ <pre class="c---">
+const Devices = styled.div`
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
 
-    ${props => props.pressed && css`background-color: red;`};
-  `;
+const Mobile = styled.span`
+  &:before,
+  &:after {
+    position: absolute;
+    content: "";
+  }
 
-  const Iphone = Mobile.extend`
-    position: relative;
-    border: 3px solid #222;
-    border-radius: 3px;
+  &:before {
+    top: 4px;
+    width: 15px;
+    height: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #222;
+    border-radius: 15px;
     background-clip: padding-box;
-    background-color: #fff;
-    width: 32px;
-    height: 50px;
-  `;
+  }
 
-  const Tablet = Mobile.extend`
-    position: relative;
-    border: 3px solid #222;
-    border-radius: 3px;
+  &:after {
+    bottom: 4px;
+    width: 6px;
+    height: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #222;
+    border-radius: 50%;
     background-clip: padding-box;
-    background-color: #fff;
-    width: 50px;
-    height: 60px;
+  }
 
-    ${props =>
-        props.landscape && css`transform: rotate(90deg);`};
-  `;
+`;
+</pre>
+<pre class="c--">
+const Iphone = Mobile.extend`
+  position: relative;
+  border: 3px solid #222;
+  border-radius: 3px;
+  background-clip: padding-box;
+  background-color: #fff;
+  width: 32px;
+  height: 50px;
+  ${props => props.pressed && css`background-color: red;`};
+  
+`;
 
-  const Desktop = styled.span`
-    position: relative;
-    border: 3px solid #222;
-    border-radius: 3px;
+const Tablet = Mobile.extend`
+  position: relative;
+  border: 3px solid #222;
+  border-radius: 3px;
+  background-clip: padding-box;
+  background-color: #fff;
+  width: 50px;
+  height: 60px;
+  ${props => props.pressed && css`background-color: red;`};
+  
+  ${props =>
+      props.landscape && css`transform: rotate(90deg);`};
+`;
+
+const Desktop = styled.span`
+  position: relative;
+  border: 3px solid #222;
+  border-radius: 3px;
+  background-clip: padding-box;
+  background-color: #fff;
+  width: 120px;
+  height: 75px;
+
+  &:before,
+  &:after {
+    position: absolute;
+    content: "";
+  }
+
+  &:before {
+    top: 4px;
+    width: 15px;
+    height: 3px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #222;
+    border-radius: 15px;
     background-clip: padding-box;
-    background-color: #fff;
-    width: 120px;
-    height: 75px;
+  }
 
-    &:before,
-    &:after {
-      position: absolute;
-      content: "";
-    }
+  &:after {
+    display: none;
+  }
 
-    &:before {
-      top: 4px;
-      width: 15px;
-      height: 3px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #222;
-      border-radius: 15px;
-      background-clip: padding-box;
-    }
-
-    &:after {
-      display: none;
-    }
-
-    ${props => props.pressed && css`background-color: red;`};
-  `;
+  ${props => props.pressed && css`background-color: red;`};
+`;
 </pre>
 
 </code>
