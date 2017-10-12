@@ -14,16 +14,18 @@
 <p>I've ditched CSS for <a href="http://styled-components.com">styled components</a> and couldn't be happier. This is my current flow, thought I'd share it with you.</p>
 
 <p>TLDR;</p>
-<p>* Props are King </p>
-<p>* Components and styles in the same file </p>
-<p>* Readable and thin return() from render() </p>
+<p>* Readable and thin return() from render() makes development a joy </p>
+<p>* Components and styles in the same file make style changes and maintaing more fun  </p>
 
-<p>Until now the approach was a combination of utility css files (imagine divs with flexbox classes as 'col-center justify-content-center align-items-center') and react media to render chunks of markup at diferent breakpoints. It was the first step towards minimizing lenght of Css and naming classes. </p>
-
+<p>Until now the approach was a combination of utility css files (imagine divs with flexbox classes as 'col-center justify-content-center align-items-center') and react media to render chunks of markup at diferent breakpoints. It was the first step towards minimizing lenght of CSS and the hassle of naming classes (at work we are trilingual). </p>
+<p>The trend was there, try to make self contained widgets with inmutable CSS classes and one Javascript object with styles to avoid polluting a CSS file with one-use clutter (be it #id or .class).</p>
 <code>
 <pre class="c">
 import React, { Component, PropTypes } from "react";
 import Media from 'react-media';
+import Footer from './widgets/footer';
+import FooterMobile from './widgets/footer-mobile';
+
 
 class App extends Component {
   render() {
@@ -45,8 +47,7 @@ class App extends Component {
 </pre>
 </code>
 
-<p>Props are javascript truth and styled components glues it sensationally. It makes dealing with rainbow designers easy and painless. </p>
-
+<p>Thing is, props are javascript truth and styled components glues it sensationally. It makes dealing with rainbow designers easy and painless. </p>
 
 <code>
 <pre class="c">
@@ -54,12 +55,12 @@ import styled, { css,keyframes } from 'styled-components';
 export default () => (
   &lt;div&gt;
   
-    &lt;Paragraph tint="red"&gt;
+    &lt;Paragraph tint="red" uppercase&gt;
       Hello World
     &lt;/Paragraph&gt;
 
-    &lt;Paragraph uppercase&gt;
-      Hello &lt;Bold&gt;World&lt;/Bold&gt;
+    &lt;Paragraph&gt;
+    &lt;Word tint="#999"&gt; Hello &lt;/Word&gt; &lt;Bold&gt;World&lt;/Bold&gt;
     &lt;/Paragraph&gt;
 
   &lt;/div&gt;
@@ -74,11 +75,18 @@ const Paragraph = styled.p`
 const Bold = styled.span`
   font-weight:bold;
 `;
+const Uppercase = styled.span`
+text-transform:uppercase;
+`;
+const Word = styled.span`
+color: ${props => props.tint ? tint : '#444'};
+`;
+
 </pre>
 </code>
 
-<p>The tint prop accepts any color and fallbacks to a global/default color if not present. We are cutting classes && clutter in the return(). We can make our text bold or uppercase right here right now. </p>
-<p>Moar Lo-Fi styled components I love </p>
+<p>The tint prop accepts any color and fallbacks to a global/default color if not present. We can make our text bold or uppercase right here right now. </p>
+<p>Moar Lo-Fi styled components I may have used in the past: </p>
 
 <code>
   <pre class="c-">
@@ -199,7 +207,7 @@ const PopUp = styled.div`
   background: ${props => props.dark ? '#444' : '#f9f9f9'};
   color: ${props => props.dark ? '#f9f9f9' : '#444'};
 
-  @media (min-width: 992px) {
+  @media (min-aspect-ratio: 16/9) {
     position:absolute;
     top:50%;
     left:50%;
@@ -227,8 +235,12 @@ const PopUp = styled.div`
 
 
 <p> Real World Example </p>
+<p>We've built at work our own feedback tool, when a client fills a bug we ask for a few things, one of them is on which device the err ocurred (think breakpoint, OS/Software has it's own picker) </p>
 
 <img class="screenshot" src="./devices.png" />
+
+<p>It starts with something like this:</p>
+
 
 <code>
   <pre class="c">
@@ -237,28 +249,39 @@ class CreateBug extends Component {
     device: "phone",
   };      
 
-  render() {
+  renderDeviceSelector() {
+    if (!this.state.device) return;
 
     return (
       &lt;Devices&gt;
-          &lt;Iphone
-          pressed={this.state.device == "phone"}
-          onClick={() => this.setState({ device: "phone" })}
-        /&gt;
-          &lt;Tablet
-          pressed={this.state.device == "tablet"}
-          onClick={() => this.setState({ device: "tablet" })}
-        /&gt;
-          &lt;Tablet
-          pressed={this.state.device == "tablet-landscape"}
-          onClick={() => this.setState({ device: "tablet-landscape" })}
-          landscape
-        /&gt;
-          &lt;Desktop
-          pressed={this.state.device == "desktop"}
-          onClick={() => this.setState({ device: "desktop" })}
-        /&gt;
-      &lt;/Devices&gt;
+      &lt;Iphone
+      pressed={this.state.device == "phone"}
+      onClick={() => this.setState({ device: "phone" })}
+    /&gt;
+      &lt;Tablet
+      pressed={this.state.device == "tablet"}
+      onClick={() => this.setState({ device: "tablet" })}
+    /&gt;
+      &lt;Tablet
+      pressed={this.state.device == "tablet-landscape"}
+      onClick={() => this.setState({ device: "tablet-landscape" })}
+      landscape
+    /&gt;
+      &lt;Desktop
+      pressed={this.state.device == "desktop"}
+      onClick={() => this.setState({ device: "desktop" })}
+    /&gt;
+  &lt;/Devices&gt;
+      )
+  
+  }
+
+  render() {
+
+    return (
+      &lt;Editor&gt;
+       {this.renderDeviceSelector()}
+      &lt;/Editor&gt;
     )
   }
 }   
@@ -367,6 +390,8 @@ const Desktop = styled.span`
 
 </code>
 
+<p>You could say to atomize things more and make renderDeviceSelector a component with it's own file but the bigger the project we start to have few problems such as naming files, importing them, switching folders...mental debt for the future self.</p>
+<p>What I'm trying to say is find your way and don't settle with your current flow just yet. Try styled-components now.</p>
 
 
 <p>Bonus.</p>
