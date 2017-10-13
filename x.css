@@ -59,6 +59,9 @@ svg:not(:root) {
 .txt-bold{
   font-weight:700;
 }
+strong{
+  font-weight:400;
+}
 p{
   display: block;
   max-width: 700px;

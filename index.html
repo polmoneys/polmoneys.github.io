@@ -11,21 +11,24 @@
 <body>
 <p class="txt-bold">THIS IS A WORK IN PROGRESS. NOT READY FOR PUBLIC EXPOSURE.</p>
 <p>What a time to be alive.</p>
-<p>I've ditched CSS for <a href="http://styled-components.com">styled components</a> and couldn't be happier. This is my current flow, thought I'd share it with you.</p>
 
 <p>TLDR;</p>
-<p>* Readable and thin return() from render() makes development a joy </p>
-<p>* Components and styles in the same file make style changes and maintaing more fun  </p>
+<p>* The 'it works on a t-shirt' test is my go-to test.</p>
+<p>* Components and styles in the same file but don't atomize too much.</p>
+<p>* Writing, be it new or maintainance, need to be joyful.  </p>
 
+
+<p>I'm all in with <a href="http://styled-components.com">styled components</a> and couldn't be happier. This is my current flow, thought I'd share it with you.</p>
+<p>My background is as advertising copywriter so coding to me feels a lot more like writing than math. Writing is hard, thanks god for the tools that have popped over the years (Sass/PostCss) as they bring extra powers, structure, readibilty and joy, to writing. </p>
 <p>Until now the approach was a combination of utility css files (imagine divs with flexbox classes as 'col-center justify-content-center align-items-center') and react media to render chunks of markup at diferent breakpoints. It was the first step towards minimizing lenght of CSS and the hassle of naming classes (at work we are trilingual). </p>
 <p>The trend was there, try to make self contained widgets with inmutable CSS classes and one Javascript object with styles to avoid polluting a CSS file with one-use clutter (be it #id or .class).</p>
+
 <code>
 <pre class="c">
 import React, { Component, PropTypes } from "react";
-import Media from 'react-media';
+<strong class="c--">import Media from 'react-media';</strong>
 import Footer from './widgets/footer';
 import FooterMobile from './widgets/footer-mobile';
-
 
 class App extends Component {
   render() {
@@ -34,10 +37,10 @@ class App extends Component {
         {matches =>
           matches
             ? &lt;div&gt;
-                &lt;Footer /&gt;
+            <strong class="c--"> &lt;Footer /&gt;</strong>
               &lt;/div&gt;
             : &lt;div&gt;
-                &lt;FooterMobile /&gt;
+            <strong class="c--"> &lt;FooterMobile /&gt;</strong>
               &lt;/div&gt;
           }
       &lt;/Media&gt;
@@ -52,10 +55,11 @@ class App extends Component {
 <code>
 <pre class="c">
 import styled, { css,keyframes } from 'styled-components';
+
 export default () => (
   &lt;div&gt;
   
-    &lt;Paragraph tint="red" uppercase&gt;
+    &lt;Paragraph <strong class="c---">tint="red" uppercase</strong>&gt;
       Hello World
     &lt;/Paragraph&gt;
 
@@ -68,10 +72,10 @@ export default () => (
 </pre>
 
   <pre class="c-">
-const Paragraph = styled.p`
-  color: ${props => props.tint ? tint : '#444'};
-  text-transform: ${props => props.uppercase ? 'uppercase' : 'none'};
-`;
+<strong class="c---">const Paragraph = styled.p`
+ color: ${props => props.tint ? tint : '#444'};
+text-transform: ${props => props.uppercase ? 'uppercase' : 'none'};
+`;</strong>
 const Bold = styled.span`
   font-weight:bold;
 `;
@@ -176,7 +180,7 @@ const LinkUnderline = Link.extend`
 </code>
 <p>You could have styled the Touchables above with props but to make things a bit more clear for my teammates unless they are obvious ('uppercase') I don't mind writing a bit more. I was one of those who could never tell if a color was 'primary' or 'danger'...</p>
 
-<p>As you contemplate the Way let's consider a classic piece of UI and marvel ourselves with all the Css we can use in JS. Most of it works, we can ditch our beloved lobotomized owl selector for good.</p>
+<p>As you contemplate the Way let's consider a classic piece of UI and marvel ourselves with all the Css we can use in JS. Most of it works, no need to ditch your fav old tricks.</p>
 
 <code>
   <pre class="c">
