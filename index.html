@@ -11,17 +11,18 @@
 <body>
 <p class="txt-bold">THIS IS A WORK IN PROGRESS. NOT READY FOR PUBLIC EXPOSURE.</p>
 <p>What a time to be alive.</p>
+<p>I'm all in with <a href="http://styled-components.com">styled components</a> and couldn't be happier. This is my current flow, thought I'd share it with you.</p>
 
-<p>TLDR;</p>
+<!-- <p>TLDR;</p>
 <p>* The 'it works on a t-shirt' test is my go-to test.</p>
 <p>* Components and styles in the same file but don't atomize too much.</p>
-<p>* Writing, be it new or maintainance, need to be joyful.  </p>
+<p>* Writing, be it new or maintainance, need to be joyful.  </p> -->
 
 
-<p>I'm all in with <a href="http://styled-components.com">styled components</a> and couldn't be happier. This is my current flow, thought I'd share it with you.</p>
-<p>My background is as advertising copywriter so coding to me feels a lot more like writing than math. Writing is hard, thanks god for the tools that have popped over the years (Sass/PostCss) as they bring extra powers, structure, readibilty and joy, to writing. </p>
-<p>Until now the approach was a combination of utility css files (imagine divs with flexbox classes as 'col-center justify-content-center align-items-center') and react media to render chunks of markup at diferent breakpoints. It was the first step towards minimizing lenght of CSS and the hassle of naming classes (at work we are trilingual). </p>
-<p>The trend was there, try to make self contained widgets with inmutable CSS classes and one Javascript object with styles to avoid polluting a CSS file with one-use clutter (be it #id or .class).</p>
+<p class="txt-bold"> How we got here</p>
+
+<p>Until now the approach was a combination of utility css files (imagine divs with flexbox classes as 'col-center justify-content-center align-items-center') and react media to render chunks of markup at diferent breakpoints.  </p>
+<p>It was the first step towards minimizing lenght of CSS and the hassle of naming classes (at work we are trilingual).</p>
 
 <code>
 <pre class="c">
@@ -50,7 +51,55 @@ class App extends Component {
 </pre>
 </code>
 
-<p>Thing is, props are javascript truth and styled components glues it sensationally. It makes dealing with rainbow designers easy and painless. </p>
+<p>The trend was there, try to make self contained widgets with inmutable CSS classes and one Javascript object with styles to avoid polluting a CSS file with one-use clutter (be it #id or .class).</p>
+<p>We had a txt.js file under widgets folder with some of these:</p>
+
+<code>
+  <pre class="c">
+
+
+export const Bold = ({ children }) => {
+  const styles = {
+    fontWeight: 700
+  };
+  return (
+     &lt;span style={styles}&gt;
+      {children}
+     &lt;/span&gt;
+  );
+};
+
+export const Touchable = ({ children }) => {
+  const styles = {
+    cursor: "pointer"
+  };
+  return (
+     &lt;span style={styles}&gt;
+      {children}
+     &lt;/span&gt;
+  );
+};
+
+export const FontMegrim = ({ children, uppercase, typeScale }) => {
+  const styles = {
+    fontFamily: "Megrim, cursive",
+    textTransform: uppercase ? "uppercase" : "none"
+  };
+  return (
+    &lt;span style={styles} className={typeScale}&gt;
+      {children}
+    &lt;/span&gt;
+  );
+};
+
+// use anywhere
+// import { FontMegrim, Bold,Touchable } from "../widgets/txt";
+// &lt;p&gt; &lt;FontMegrim uppercase&gt;Hello, &lt;Bold&gt;bold&lt;/Bold&gt;&lt;/p&gt; &lt;/FontMegrim&gt;
+</pre>
+</code>
+
+<p>Notice how most don't reference a .txt-bold class on a immutable/utilities CSS file, the goal was self containtment when possible. </p>
+<p>The above line is a lie if you look at FontMegrim and how it requires a classname that assigns font-size. Thing is, we can do better and have it all right here right now.</p>
 
 <code>
 <pre class="c">
@@ -89,7 +138,6 @@ color: ${props => props.tint ? tint : '#444'};
 </pre>
 </code>
 
-<p>The tint prop accepts any color and fallbacks to a global/default color if not present. We can make our text bold or uppercase right here right now. </p>
 <p>Moar Lo-Fi styled components I may have used in the past: </p>
 
 <code>
@@ -180,7 +228,9 @@ const LinkUnderline = Link.extend`
 </code>
 <p>You could have styled the Touchables above with props but to make things a bit more clear for my teammates unless they are obvious ('uppercase') I don't mind writing a bit more. I was one of those who could never tell if a color was 'primary' or 'danger'...</p>
 
+
 <p>As you contemplate the Way let's consider a classic piece of UI and marvel ourselves with all the Css we can use in JS. Most of it works, no need to ditch your fav old tricks.</p>
+
 
 <code>
   <pre class="c">
@@ -236,6 +286,7 @@ const PopUp = styled.div`
 </code>
 
 
+<p>All the powers right here right now. Nice. </p>
 
 
 <p> Real World Example </p>
@@ -243,8 +294,7 @@ const PopUp = styled.div`
 
 <img class="screenshot" src="./devices.png" />
 
-<p>It starts with something like this:</p>
-
+<p>Let's make the devices with CSS because we had little time and didn't want to lose myself browsing thenounproject.com:</p>
 
 <code>
   <pre class="c">
@@ -398,8 +448,12 @@ const Desktop = styled.span`
 <p>What I'm trying to say is find your way and don't settle with your current flow just yet. Try styled-components now.</p>
 
 
-<p>Bonus.</p>
 
+<p>'The first requirement of The Economist is that it should be readily understandable. Clarity of writing usually follows clarity of thought.' The Economist style Guide rings true to my background as writer, writing is really hard.</p>
+<p>At work we code wide/big interfaces so we need a plan/zen on how to approach such a process with fastness and worry-free. We do Javascript and React is our front end framework. Disclaimer: no CS degree, self taught.</p>
+
+
+<p>Bonus for the mad.</p>
 
 <code>
 <pre>
