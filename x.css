@@ -59,6 +59,15 @@ svg:not(:root) {
 .txt-bold{
   font-weight:700;
 }
+.txt-center{
+  display: block;
+  text-align:center;
+}
+.txt-alert{
+  font-weight:200;
+  color:#ef92ca;
+  
+}
 strong{
   font-weight:400;
 }
