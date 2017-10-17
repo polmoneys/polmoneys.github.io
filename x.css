@@ -82,6 +82,9 @@ p{
     padding:1rem .5rem;
     font-size:1.2rem;
   }
+  pre+pre{
+    padding:.5rem .5rem;
+  }
   .c{
    color: #92ead3;
   }
@@ -92,5 +95,5 @@ p{
     color:#ef92ca;
   }
   .c---{
-    color:#80c4e2;
+    color:#f7ee78;
   }

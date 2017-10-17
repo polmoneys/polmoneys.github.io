@@ -99,7 +99,8 @@ export const FontMegrim = ({ children, uppercase, typeScale }) => {
 </code>
 
 <p>Notice how most don't reference a .txt-bold class on a immutable/utilities CSS file, the goal was self containtment when possible. </p>
-<p>The above line is a lie if you look at FontMegrim and how it requires a classname that assigns font-size. Thing is, we can do better and have it all right here right now.</p>
+<p>The above line is a lie if you look at FontMegrim and how it requires a classname that assigns font-size.The idea is to set the default font-family and font-size on the global CSS file and use this component on titles/headers.</p>
+<p>Thing is, we can do better and have it all right here right now.</p>
 
 <code>
 <pre class="c">
@@ -156,7 +157,8 @@ const VerticalText = styled.p`
   </pre>
 </code>
 
-<p>If we transition to a more ambitious endeavour and accept the fact that the backbone of any website are links and buttons, we can go for another small effort big #win.</p>
+<p>If we transition to a more ambitious endeavour athe nd accept the fact that backbone of any website are links and buttons, we can go for another small effort big #win.</p>
+<p>Color variations on buttons and force links to appear like buttons is one of the oldest fights. Now we can win it swiftly.</p>
 
 <code>
   <pre class="c">
@@ -186,7 +188,6 @@ export default () => (
 </pre>
 </code>
 
-<p>Color variations on buttons and make links look like buttons is one of the oldest fights. Now we can win it swiftly.</p>
 
 <code>
   <pre class="c-">
@@ -218,7 +219,8 @@ const TouchableBranded = Touchable.extend`
     opacity:.8;
   }
 `;
-
+</pre>
+<pre class="c---">
 const Link = Touchable.withComponent('a')
 
 const LinkUnderline = Link.extend`
@@ -227,10 +229,7 @@ const LinkUnderline = Link.extend`
 </pre>
 </code>
 <p>You could have styled the Touchables above with props but to make things a bit more clear for my teammates unless they are obvious ('uppercase') I don't mind writing a bit more. I was one of those who could never tell if a color was 'primary' or 'danger'...</p>
-
-
 <p>As you contemplate the Way let's consider a classic piece of UI and marvel ourselves with all the Css we can use in JS. Most of it works, no need to ditch your fav old tricks.</p>
-
 
 <code>
   <pre class="c">
@@ -255,12 +254,14 @@ export default () => (
 
   <pre class="c--">
 const foo = '.4rem';
-
+</pre>
+<pre class="c---">
 const PopUp = styled.div`
   border-radius:${foo};
   background: ${props => props.dark ? '#444' : '#f9f9f9'};
   color: ${props => props.dark ? '#f9f9f9' : '#444'};
-
+</pre>
+<pre class="c--">
   @media (min-aspect-ratio: 16/9) {
     position:absolute;
     top:50%;
@@ -275,7 +276,8 @@ const PopUp = styled.div`
   #crash & {
     display: none;
   }
-
+</pre>
+<pre class="c---">
   ${props =>
     props.notification &&
     css`
@@ -307,7 +309,7 @@ class CreateBug extends Component {
     if (!this.state.device) return;
 
     return (
-      &lt;Devices&gt;
+      &lt;Devices&gt;    
       &lt;Iphone
       pressed={this.state.device == "phone"}
       onClick={() => this.setState({ device: "phone" })}
@@ -340,8 +342,7 @@ class CreateBug extends Component {
   }
 }   
 </pre>
-
- <pre class="c---">
+ <pre class="c-">
 const Devices = styled.div`
   padding: 1rem;
   display: flex;
@@ -378,7 +379,6 @@ const Mobile = styled.span`
     border-radius: 50%;
     background-clip: padding-box;
   }
-
 `;
 </pre>
 <pre class="c--">
@@ -390,10 +390,12 @@ const Iphone = Mobile.extend`
   background-color: #fff;
   width: 32px;
   height: 50px;
+</pre>
+<pre class="c---">
   ${props => props.pressed && css`background-color: red;`};
-  
-`;
-
+  `;
+</pre>
+<pre class="c--">
 const Tablet = Mobile.extend`
   position: relative;
   border: 3px solid #222;
@@ -402,12 +404,13 @@ const Tablet = Mobile.extend`
   background-color: #fff;
   width: 50px;
   height: 60px;
+</pre>
+<pre class="c---">
   ${props => props.pressed && css`background-color: red;`};
-  
-  ${props =>
-      props.landscape && css`transform: rotate(90deg);`};
-`;
-
+  ${props => props.landscape && css`transform: rotate(90deg);`}
+  `;
+</pre>
+<pre class="c--">
 const Desktop = styled.span`
   position: relative;
   border: 3px solid #222;
@@ -437,11 +440,11 @@ const Desktop = styled.span`
   &:after {
     display: none;
   }
-
-  ${props => props.pressed && css`background-color: red;`};
-`;
 </pre>
-
+  <pre class="c---">
+  ${props => props.pressed && css`background-color: red;`};
+  `;
+</pre>
 </code>
 
 <p>You could say to atomize things more and make renderDeviceSelector a component with it's own file but the bigger the project we start to have few problems such as naming files, importing them, switching folders...mental debt for the future self.</p>
