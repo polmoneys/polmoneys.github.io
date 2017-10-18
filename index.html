@@ -9,16 +9,11 @@
 </head>
 
 <body>
-<p class=" txt-alert">WORK IN PROGRESS</p>
-<p>'The first requirement of The Economist is that it should be readily understandable. Clarity of writing usually follows clarity of thought.' The Economist style Guide rings true to my background as writer, writing is really hard.</p>
+<p class="txt-alert">'The first requirement of The Economist is that it should be readily understandable. Clarity of writing usually follows clarity of thought.' The Economist style Guide rings true to my background as writer, writing is really hard.</p>
 
-<p>What a time to be alive.</p>
-<p>I'm all in with <a href="http://styled-components.com">styled components</a> and couldn't be happier. This is my current flow, thought I'd share it with you.</p>
+<p>What a time to be alive, this text is a work in progress.</p>
 
-<!-- <p>TLDR;</p>
-<p>* The 'it works on a t-shirt' test is my go-to test.</p>
-<p>* Components and styles in the same file but don't atomize too much.</p>
-<p>* Writing, be it new or maintainance, need to be joyful.  </p> -->
+<p>I'm all in with <a href="http://styled-components.com">styled-components</a> and couldn't be happier. This is my current flow, thought I'd share it with you.</p>
 
 
 <p class="txt-bold"> How we got here</p>
@@ -272,15 +267,13 @@ const PopUp = styled.div`
   }</strong>
 <strong class="c---">
   ${props =>
-    props.notification &&
+    props.disabled &&
     css`
       background-color: #777;
     `};
 `;</strong></pre>
 </code>
 <p>All the powers right here right now. Nice. </p>
-<p>Those final lines are a real powerful combo paired with React and State mgmt. </p>
-
 <p class="txt-bold">  Real World Example </p>
 <p>We've built at work our own feedback tool, when a client fills a bug we ask for a few things, one of them is on which device the err ocurred (think breakpoint, OS/Software has it's own picker) </p>
 

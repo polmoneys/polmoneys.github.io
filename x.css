@@ -65,7 +65,7 @@ svg:not(:root) {
 }
 .txt-alert{
   font-weight:200;
-  color:#f9d397;
+  color:#5c41ec;
 }
 strong{
   font-weight:400;
@@ -107,5 +107,5 @@ p{
   }
 
   a,a:link,a:hover,a:active,a:visited{
-    color:#f9d397;
+    color:#5c41ec;
   }
