@@ -28,7 +28,7 @@ body {
 	font-size: 1.5rem;
   font-weight: normal;
   line-height: 1.5;
-  color: #444;
+  color: #191919;
   background-color: #fff;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   text-rendering: optimizeLegibility;
@@ -65,8 +65,7 @@ svg:not(:root) {
 }
 .txt-alert{
   font-weight:200;
-  color:#ef92ca;
-  
+  color:#f9d397;
 }
 strong{
   font-weight:400;
@@ -86,7 +85,7 @@ p{
     width:100%;
     max-width: 900px;
     margin:0 auto;
-    background-color: rgb(35, 33, 46);
+    background-color: #5c41ec ;
     border-radius:.2rem;
     padding:1rem .5rem;
     font-size:1.2rem;
@@ -98,11 +97,15 @@ p{
    color: #92ead3;
   }
   .c-{
-    color:#a49ff1;
+    color:#f9d397;
   }
   .c--{
     color:#ef92ca;
   }
   .c---{
     color:#f7ee78;
+  }
+
+  a,a:link,a:hover,a:active,a:visited{
+    color:#f9d397;
   }
