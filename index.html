@@ -9,17 +9,13 @@
 </head>
 
 <body>
-<p class="txt-alert">'The first requirement of The Economist is that it should be readily understandable. Clarity of writing usually follows clarity of thought.' The Economist style Guide rings true to my background as writer, writing is really hard.</p>
-
+<p><span class="txt-alert">'The first requirement of The Economist is that it should be readily understandable. Clarity of writing usually follows clarity of thought.'</span> The Economist style Guide.</p>
 <p>What a time to be alive, this text is a work in progress.</p>
+<p>I'm all in with <a href="http://styled-components.com">styled-components</a> and couldn't be happier, it just makes the developer experience much better.</p>
 
-<p>I'm all in with <a href="http://styled-components.com">styled-components</a> and couldn't be happier. This is my current flow, thought I'd share it with you.</p>
 
-
-<p class="txt-bold"> How we got here</p>
-
-<p>Until now the approach was a combination of utility css files (imagine divs with flexbox classes as 'col-center justify-content-center align-items-center') and react media to render chunks of markup at diferent breakpoints.  </p>
-<p>It was the first step towards minimizing lenght of CSS and the hassle of naming classes (at work we are trilingual).</p>
+<p>We've done fine with preprocessors and a bunch of utility CSS files, imagine divs with flexbox classes as <span class="txt-bold">'col-center justify-content-center align-items-center'</span>, and react-media to render chunks of markup at diferent breakpoints.  </p>
+<p>It was the first step towards minimizing CSS and the hassle of naming classes (at work we are trilingual).</p>
 
 <code><pre class="c">
 import React, { Component, PropTypes } from "react";
@@ -47,7 +43,7 @@ class App extends Component {
 </pre>
 </code>
 
-<p>The trend was there, try to make self contained widgets with inmutable CSS classes and one Javascript object with styles to avoid polluting a CSS file with one-use clutter (be it #id or .class).</p>
+<p>The trend was there, try to make self contained widgets with inmutable CSS classes and one Javascript object with styles to avoid polluting a CSS file with one-use <span class="txt-bold">#id or .class</span>.</p>
 <code><pre><strong class="c">
 export const Bold = ({ children }) => {</strong>
   <strong class="c--">
@@ -63,8 +59,7 @@ export const Bold = ({ children }) => {</strong>
   };</strong>
 </pre>
 </code>
-<p>To use it:</p>
-
+<p>And use it:</p>
 <code><pre class="c">
 import { Bold } from "../widgets/txt";
 
@@ -75,7 +70,7 @@ export default () => (
 )</pre>
 </code>
 
-<p>We had a txt.js file under widgets folder with some of these:</p>
+<p>We had a txt.js file under  <span class="txt-bold">/widgets</span> with some of these:</p>
 
 <code><pre class="c">
 export const Touchable = ({ children }) => {
@@ -102,8 +97,7 @@ export const FontMegrim = ({ children, uppercase, typeScale }) => {
 };</pre>
 </code>
 
-<p>Notice how most don't reference a class on a immutable/utilities CSS file, the goal was self containtment when possible.  </p>
-<p>The above line is a lie if you look at FontMegrim and how it requires a classname that assigns font-size.The idea is to set the default font-family and font-size on the global CSS file with generic selectors (body,p) and use this component on titles/headers.</p>
+<p>No need to reference a .class on a immutable/utilities CSS file, the goal always was self containtment and minimizing the amount of files in big projects.</p>
 <p>Thing is, we can do better and have it all right here right now.</p>
 
 <code><pre class="c">
@@ -124,17 +118,17 @@ export default () => (
 )</pre>
 <pre class="c-">
 <strong class="c---">const Paragraph = styled.p`
- color: ${props => props.tint ? tint : '#444'};
-text-transform: ${props => props.uppercase ? 'uppercase' : 'none'};
+  color: ${props => props.tint ? tint : '#444'};
+  text-transform: ${props => props.uppercase ? 'uppercase' : 'none'};
 `;</strong>
 const Bold = styled.span`
   font-weight:bold;
 `;
 const Uppercase = styled.span`
-text-transform:uppercase;
+  text-transform:uppercase;
 `;
 const Word = styled.span`
-color: ${props => props.tint ? tint : '#444'};
+  color: ${props => props.tint ? tint : '#444'};
 `;</pre>
 </code>
 
@@ -155,7 +149,7 @@ const VerticalText = styled.p`
 </code>
 
 <p>Color variations on buttons and force links to appear like buttons is one of the oldest fights. Now we can win it swiftly.</p>
-<p>Styled components' withComponent and extend methods are all you'll ever need to make contextual changes to background-color(etc) without any hassle or adding specificity (#login .button).</p>
+<p>Styled-components' <span class="txt-bold">withComponent</span> and  <span class="txt-bold">extend</span> methods are all you'll ever need to make contextual changes without adding specificity by creating #id > descendant relationships on a CSS file ever again.</p>
 
 <code><pre>
 <strong class="c-">
@@ -180,8 +174,8 @@ const Touchable = styled.button`
 `;
 
 const TouchableBranded = Touchable.extend`
-  background: pink;
   color:#fff;
+  background: pink;
 
   &:hover {
     opacity:.8;
@@ -222,8 +216,8 @@ const LinkUnderline = Link.extend`
   )</pre>
 </code>
 
-<p>We could style the Touchables above with props but to make things a bit more clear for my teammates unless they are obvious ('uppercase') I don't mind writing a bit more. I was one of those who could never tell if a color was 'secondary' or 'calm'...</p>
-<p>As you contemplate the Way let's consider a classic piece of UI and marvel ourselves on how close to real CSS styled components are right now. Most of it works, no need to ditch your fav old tricks like :not(:last-of-type).</p>
+<p>We could style the Touchables above with props but to make things a bit more easy to come back to it unless they are obvious I don't mind writing a bit more. I was one of those who could never tell if a color was 'secondary' or 'calm'...</p>
+<p>As you contemplate the Way let's consider a classic piece of UI and marvel ourselves on how close to real CSS styled components are right now. Most of it works, no need to ditch fav old tricks like <span class="txt-bold">:not(:last-of-type)</span>.</p>
 
 <code><pre>
 <strong class="c">
@@ -274,12 +268,12 @@ const PopUp = styled.div`
 `;</strong></pre>
 </code>
 <p>All the powers right here right now. Nice. </p>
-<p class="txt-bold">  Real World Example </p>
-<p>We've built at work our own feedback tool, when a client fills a bug we ask for a few things, one of them is on which device the err ocurred (think breakpoint, OS/Software has it's own picker) </p>
+<p>One last Real World Example, it's a complex component/piece of UI but it reads like a poem and does not need any 'external' CSS to shine. </p>
+<p>At work we've build our own feedback 'tool', when a client fills a bug we ask for a few things, one of them is on which device the err ocurred (think breakpoint, OS/Software has it's own picker). </p>
 
 <img class="screenshot" src="./devices.png" />
 
-<p>Let's make the devices with CSS because we had little time and didn't want to lose myself browsing thenounproject.com:</p>
+<p>We had little time so we hack the devices with CSS (I now know better than to lose myself browsing The Noun Project).</p>
 
 <code><pre>
   <strong class="c">
@@ -327,63 +321,63 @@ class CreateBug extends Component {
 </strong>
  <strong class="c-">
 const Devices = styled.div`
-  padding: 1rem;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 1rem;
 `;
 
 const Mobile = styled.span`
   &:before,
   &:after {
-    position: absolute;
     content: "";
+    position: absolute;
   }
 
   &:before {
-    top: 4px;
     width: 15px;
     height: 3px;
     left: 50%;
+    top: 4px;
     transform: translateX(-50%);
-    background: #222;
     border-radius: 15px;
+    background: #222;
     background-clip: padding-box;
   }
 
   &:after {
-    bottom: 4px;
     width: 6px;
     height: 6px;
     left: 50%;
+    bottom: 4px;
     transform: translateX(-50%);
-    background: #222;
     border-radius: 50%;
+    background: #222;
     background-clip: padding-box;
   }
 `;</strong>
 <strong class="c--">
 const Iphone = Mobile.extend`
   position: relative;
+  width: 32px;
+  height: 50px;
   border: 3px solid #222;
   border-radius: 3px;
-  background-clip: padding-box;
   background-color: #fff;
-  width: 32px;
-  height: 50px;</strong>
+  background-clip: padding-box;</strong>
   <strong class="c---">
   ${props => props.pressed && css`background-color: red;`};
   `;</strong>
 <strong class="c--">
 const Tablet = Mobile.extend`
   position: relative;
+  width: 50px;
+  height: 60px;
   border: 3px solid #222;
   border-radius: 3px;
-  background-clip: padding-box;
   background-color: #fff;
-  width: 50px;
-  height: 60px;</strong>
+  background-clip: padding-box;</strong>
 <strong class="c---">
   ${props => props.pressed && css`background-color: red;`};
   ${props => props.landscape && css`transform: rotate(90deg);`}
@@ -391,27 +385,27 @@ const Tablet = Mobile.extend`
 <strong class="c--">
 const Desktop = styled.span`
   position: relative;
-  border: 3px solid #222;
-  border-radius: 3px;
-  background-clip: padding-box;
-  background-color: #fff;
   width: 120px;
   height: 75px;
+  border: 3px solid #222;
+  border-radius: 3px;
+  background-color: #fff;
+  background-clip: padding-box;
 
   &:before,
   &:after {
-    position: absolute;
     content: "";
+    position: absolute;
   }
 
   &:before {
-    top: 4px;
     width: 15px;
     height: 3px;
     left: 50%;
+    top: 4px;
     transform: translateX(-50%);
-    background: #222;
     border-radius: 15px;
+    background: #222;
     background-clip: padding-box;
   }
 
@@ -423,25 +417,9 @@ const Desktop = styled.span`
   `;</strong></pre>
 </code>
 
-<p>You could say to atomize things more and make renderDeviceSelector a component with it's own file but the bigger the project we start to have few problems such as naming files, importing them, switching folders...mental debt for the future self.</p>
-<p>What I'm trying to say is find your way and don't settle with your current flow just yet. Try styled-components now.</p>
-<p>At work we code wide/big interfaces so we need a plan/zen on how to approach such a process with fastness and worry-free. We do Javascript and React is our front end framework. Disclaimer: no CS degree, self taught.</p>
-
-
-<p>Bonus for the mad.</p>
-
-<code>
-<pre>
-const complexMixin = css`
-color: ${props => props.whiteColor ? 'white': 'black'}
-`;
-
-const StyledComp = styled.div`
-${props => props.complex ? complexMixin : 'color: blue;'}
-`;
-</pre>
-
-</code>
+<p>You could atomize things more and make renderDeviceSelector a component with it's own file, do what you feel is best, find your balance. In my experience, the bigger the project, the more I hate naming files, importing them, switching folders...mental debt for the future self.</p>
+<p class="txt-bold">With Styled-components I can write better 'files', easier on the eyes of my teammates and future self. </p>
+<p>(What I'm trying to say is find your way and don't settle with your current flow just yet)</p>
 
 </body>
 
