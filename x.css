@@ -52,6 +52,11 @@ display: block;
 margin:2rem auto;
 }
 
+.logo{
+  display: block;
+  max-height:4rem;
+  margin:2rem auto;
+}
 svg:not(:root) {
   overflow: hidden;
 }
