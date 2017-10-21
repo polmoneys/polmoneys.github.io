@@ -16,6 +16,10 @@
 
 
 <p>We've done fine with preprocessors and a bunch of utility CSS files, imagine divs with flexbox classes as <span class="txt-bold">'col-center justify-content-center align-items-center'</span>, and react-media to render chunks of markup at diferent breakpoints.  </p>
+
+
+
+
 <p>It was the first step towards minimizing CSS and the hassle of naming classes (at work we are trilingual).</p>
 
 <code><pre class="c">
@@ -269,6 +273,130 @@ const PopUp = styled.div`
 `;</strong></pre>
 </code>
 <p>All the powers right here right now. Nice. </p>
+
+
+<p>Let's build a quick video player. At the end we'll have a pretty readable code file.</p>
+
+<code><pre class="c--">
+  import React, { Component } from "react";
+  import PropTypes from 'prop-types';
+  import styled, { css,keyframes } from 'styled-components';
+  
+  class Video extends Component {
+    state = {
+      playing: false,
+      muted: false
+    };
+  
+    play() {
+      this.el.play();
+      this.setState({ playing: true });
+    }
+  
+    stop() {
+      this.el.pause();
+      this.setState({ playing: false });
+    }
+  
+    mute() {
+      this.el.muted = true;
+      this.setState({ muted: true });
+    }
+  
+    unmute() {
+      this.el.muted = false;
+      this.setState({ muted: false });
+    }
+  
+    render() {
+      const { src, poster } = this.props;
+  
+      return (
+       &lt;VideoCtn&gt;
+
+         &lt;Video
+            poster={`../media/posters/${poster}.jpg`}
+            ref={el => {
+              this.el = el;
+            }}&gt;
+           &lt;source src={`../media/${src}.webm`} type="video/webm" /&gt;
+           &lt;source src={`../media/${src}.mp4`} type="video/mp4" /&gt;
+           &lt;source src={`../media/${src}.ogg`} type="video/ogg"/&gt;
+         &lt;/Video&gt;
+  
+         &lt;VideoCtrls&gt;
+           &lt;div&gt;
+              {!this.state.playing
+                ? &lt;Touchable onClick={() => this.play()}>
+                     &lt;i className="icon ion-ios-play" /&gt;
+                  &lt;/Touchable&gt;
+                : &lt;Touchable onClick={() => this.stop()}&gt;
+                     &lt;i className="icon ion-ios-pause" /&gt;
+                   &lt;/Touchable&gt;
+                 }
+           &lt;/div&gt;
+           &lt;div&gt;
+              {!this.state.muted
+                ? &lt;Touchable onClick={() => this.mute()}&gt;
+                    &lt;i className="icon ion-android-volume-off"/&gt;
+                  &lt;/Touchable&gt;
+                : &lt;Touchable onClick={() => this.unmute()}&gt;
+                    &lt;i className="icon ion-android-volume-up"/&gt;
+                  &lt;/Touchable&gt;
+                }
+           &lt;/div&gt;
+         &lt;/VideoCtrls&gt;
+
+       &lt;/VideoCtn&gt;
+      );
+    }
+  }
+  
+  export default Video;
+
+<strong class="c---">
+  const VideoCtn = styled.div`
+    position: relative;
+    padding-bottom:${props => props.tv ? '75%' : '56.25%'};
+    height: 0;
+  `;
+
+  const Video = styled.video`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  `;
+
+  const VideoCtrls = styled.div`
+    position: absolute;
+    width: 100%;
+    left: 0;
+    height:2.5rem;
+    bottom: -2.5rem;
+    z-index: 10;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 .5rem;
+    background-color:#ddd;
+  `;
+
+  const Touchable = styled.button`
+    cursor:pointer;
+    touch-action: manipulation;
+    -webkit-appearance: button;
+    
+    & > i {
+      font-size: 2rem;
+      color:#222;
+      pointer-events: none;
+    }
+  `;</strong>
+  </pre>
+</code>
+
 <p>One last Real World Example, it's a complex component/piece of UI but it reads like a poem and does not need any 'external' CSS to shine. </p>
 <p>At work we've build our own feedback 'tool', when a client fills a bug we ask for a few things, one of them is on which device the err ocurred (think breakpoint, OS/Software has it's own picker). </p>
 
