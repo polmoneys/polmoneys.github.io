@@ -49,8 +49,10 @@ class App extends Component {
 </code>
 
 <p>The trend was there, try to make self contained widgets with inmutable CSS classes and one Javascript object with styles to avoid polluting a CSS file with one-use <span class="txt-bold">#id or .class</span>.</p>
-<code><pre><strong class="c">
-export const Bold = ({ children }) => {</strong>
+<p>We had a txt.js file under <span class="txt-bold">/widgets</span> with some of these:</p>
+
+<code><pre class="c">
+export const Bold = ({ children }) => {
   <strong class="c--">
   const styles = {
       fontWeight: 700
@@ -62,30 +64,15 @@ export const Bold = ({ children }) => {</strong>
         &lt;/span&gt;
     );
   };</strong>
-</pre>
-</code>
-<p>And use it:</p>
-<code><pre class="c">
-import { Bold } from "../widgets/txt";
 
-export default () => (
-  &lt;div&gt;
-  &lt;p&gt;Hello, &lt;Bold&gt;bold&lt;/Bold&gt;&lt;/p&gt;
-  &lt;/div&gt;
-)</pre>
-</code>
-
-<p>We had a txt.js file under <span class="txt-bold">/widgets</span> with some of these:</p>
-
-<code><pre class="c">
 export const Touchable = ({ children }) => {
   const styles = {
     cursor: "pointer"
   };
   return (
-     &lt;span style={styles}&gt;
+      &lt;span style={styles}&gt;
       {children}
-     &lt;/span&gt;
+      &lt;/span&gt;
   );
 };
 
@@ -99,16 +86,27 @@ export const FontMegrim = ({ children, uppercase, typeScale }) => {
       {children}
     &lt;/span&gt;
   );
-};</pre>
+}; 
+</pre>
+</code>
+<p>Our goal was to avoid a reference to a .class on a immutable/utilities CSS file and start with a blank canvas.</p>
+
+<p>To use it, just plug and play:</p>
+
+<code><pre class="c">
+import { Bold } from "../widgets/txt";
+
+export default () => (
+  &lt;div&gt;
+  &lt;p&gt;Hello, &lt;Bold&gt;bold&lt;/Bold&gt;&lt;/p&gt;
+  &lt;/div&gt;
+)</pre>
 </code>
 
-<p>No need to reference a .class on a immutable/utilities CSS file, the goal always was self containtment and minimizing the amount of files in big projects.</p>
 
-<p>My current txt.js file turned into <span class="txt-bold">bootstrap</span> and looks painfully empty, 2 Lo-Fi components will rule your world. </p>
+<p>With Styled-components in play txt.js file evolved into <span class="txt-bold">bootstrap.js</span> and looks painfully empty, 2 Lo-Fi components to rule your world. </p>
 
-<code><pre class="c">import styled, { css, keyframes } from "styled-components";
-
-export const Paragraph = styled.p.attrs({
+<code><pre class="c">export const Paragraph = styled.p.attrs({
   color: props => props.tint || "#444"
 })`
   color: ${props => props.tint};
@@ -126,7 +124,7 @@ export const Paragraph = styled.p.attrs({
     `};
 `;
 
-export const Word = Paragraph.withComponent("span");
+<strong class="c--">export const Word = Paragraph.withComponent("span");</strong>
 
 <strong class="c---">const fadeIn = keyframes`
     0% {
@@ -150,14 +148,14 @@ export const Touchable = styled.button`
   & > * {
     pointer-events: none;
   }
-`;
+`;</strong>
 
-export const Link = Touchable.withComponent("a");
+<strong class="c--">export const Link = Touchable.withComponent("a");
 export const LinkUnderline = Link.extend`text-decoration: underline;`;</strong></pre></code>
 
-<p>Most scenarios regarding text styling can be achieved with props and choose proper tag (p or span).</p>
-<p>Styled-components' <span class="txt-bold">withComponent</span> and <span class="txt-bold">extend</span> methods are all you'll ever need to make contextual changes without adding specificity by creating #id > descendant relationships on a CSS file ever again.</p>
-<p>Color variations on buttons and force links to appear like buttons is one of the oldest fights. Now we can win it swiftly.</p>
+<p>Styled-components' <span class="txt-bold">withComponent</span> allows choosing the right tag for the job. Color variations on buttons and force links to appear like buttons is one of the oldest fights. Now we can win it swiftly.</p>
+
+ <p><span class="txt-bold">Extend</span> is all you'll ever need to make contextual changes without adding specificity by creating #id > descendant relationships on a CSS file again.</p>
 
 <code>
 <pre class="c">import {
@@ -204,10 +202,9 @@ export const LinkUnderline = Link.extend`text-decoration: underline;`;</strong><
 `;</strong>
 </pre></code>
 
-<p>If a particular view needs some custom styles you can extend the one imported from <span class="txt-bold">/bootstrap</span>. Magic.</p>
+<p>If a particular view needs some custom styles you can extend one of the Lo-Fi components from bootstrap.js.<span class="txt-bold"> Magic</span>.</p>
 
-
-<p>Let's look at one piece of UI that reads like a poem so that you understand my joy. Let's get intimate and build a user widget like those you can find on games. <span class="txt-bold">Super cool</span>.</p>
+<p>As now we are in control of context read/write operations are full of joy. Let's get intimate and build a user widget like those you can find on games.</p>
 
 <code>
   <pre class="c">import { Paragraph, } from "../widgets/bootstrap";
@@ -216,8 +213,8 @@ export const LinkUnderline = Link.extend`text-decoration: underline;`;</strong><
     &lt;div&gt; 
 
       &lt;div&gt; 
-        &lt;Placeholder/&gt; 
-        &lt;Placeholder/&gt; 
+        &lt;SomeContent/&gt; 
+        &lt;SomeContent/&gt; 
       &lt;/div&gt; 
 
         &lt;UserCard&gt;
@@ -229,8 +226,8 @@ export const LinkUnderline = Link.extend`text-decoration: underline;`;</strong><
         &lt;/UserCard&gt;
       
       &lt;div&gt; 
-        &lt;Placeholder/&gt; 
-        &lt;Placeholder/&gt; 
+        &lt;SomeContent/&gt; 
+        &lt;SomeContent/&gt; 
       &lt;/div&gt; 
       
     &lt;/div&gt; 
@@ -271,7 +268,7 @@ export const LinkUnderline = Link.extend`text-decoration: underline;`;</strong><
   `;
   </strong>
     </pre></code>
-
+<p>It reads like a poem and it does not need much from the outside world, it's a self explanatory file.</p>    
 <p>As you contemplate the Way let's consider a classic piece of UI and marvel ourselves on how close to real CSS styled-components feels right now. Most of it works, no need to ditch fav old tricks like <span class="txt-bold">:not(:last-of-type)</span>.</p>
 
 <code><pre>
@@ -281,13 +278,13 @@ export default () => (
     
     &lt;PopUp&gt;
       &lt;div&gt; 
-        &lt;Placeholder/&gt; 
+        &lt;SomeContent/&gt; 
       &lt;/div&gt;
       &lt;div&gt; 
-        &lt;Placeholder/&gt;
+        &lt;SomeContent/&gt;
       &lt;/div&gt;
       &lt;div&gt; 
-        &lt;Placeholder/&gt; 
+        &lt;SomeContent/&gt; 
       &lt;/div&gt;
     &lt;/PopUp&gt;
   
@@ -325,125 +322,114 @@ const PopUp = styled.div`
 <p>All the powers right here right now. Nice. </p>
 
 
-<p>Let's build a quick video player. At the end we'll have a pretty readable code file.</p>
+<p>Let's build a quick video player. At the end we'll have a good-looking code file.</p>
 
 <code><pre class="c--">
-  import React, { Component } from "react";
-  import PropTypes from 'prop-types';
-  import styled, { css,keyframes } from 'styled-components';
-  
-  class Video extends Component {
-    state = {
-      playing: false,
-      muted: false
-    };
-  
-    play() {
-      this.el.play();
-      this.setState({ playing: true });
-    }
-  
-    stop() {
-      this.el.pause();
-      this.setState({ playing: false });
-    }
-  
-    mute() {
-      this.el.muted = true;
-      this.setState({ muted: true });
-    }
-  
-    unmute() {
-      this.el.muted = false;
-      this.setState({ muted: false });
-    }
-  
-    render() {
-      const { src, poster } = this.props;
-  
-      return (
-       &lt;VideoCtn&gt;
+import React, { Component } from "react";
+import PropTypes from 'prop-types';
+import styled, { css,keyframes } from 'styled-components';
+import { Touchable } from "../widgets/bootstrap";
 
-         &lt;Video
-            poster={`../media/posters/${poster}.jpg`}
-            ref={el => {
-              this.el = el;
-            }}&gt;
-           &lt;source src={`../media/${src}.webm`} type="video/webm" /&gt;
-           &lt;source src={`../media/${src}.mp4`} type="video/mp4" /&gt;
-           &lt;source src={`../media/${src}.ogg`} type="video/ogg"/&gt;
-         &lt;/Video&gt;
-  
-         &lt;VideoCtrls&gt;
-           &lt;div&gt;
-              {!this.state.playing
-                ? &lt;Touchable onClick={() => this.play()}>
-                     &lt;i className="icon ion-ios-play" /&gt;
-                  &lt;/Touchable&gt;
-                : &lt;Touchable onClick={() => this.stop()}&gt;
-                     &lt;i className="icon ion-ios-pause" /&gt;
-                   &lt;/Touchable&gt;
-                 }
-           &lt;/div&gt;
-           &lt;div&gt;
-              {!this.state.muted
-                ? &lt;Touchable onClick={() => this.mute()}&gt;
-                    &lt;i className="icon ion-android-volume-off"/&gt;
-                  &lt;/Touchable&gt;
-                : &lt;Touchable onClick={() => this.unmute()}&gt;
-                    &lt;i className="icon ion-android-volume-up"/&gt;
+class Video extends Component {
+  state = {
+    playing: false,
+    muted: false
+  };
+
+  play() {
+    this.el.play();
+    this.setState({ playing: true });
+  }
+
+  stop() {
+    this.el.pause();
+    this.setState({ playing: false });
+  }
+
+  mute() {
+    this.el.muted = true;
+    this.setState({ muted: true });
+  }
+
+  unmute() {
+    this.el.muted = false;
+    this.setState({ muted: false });
+  }
+
+  render() {
+    const { src, poster } = this.props;
+<strong class="c-">
+    return (
+      &lt;VideoCtn&gt;
+
+        &lt;Video
+          poster={`../media/posters/${poster}.jpg`}
+          ref={el => {
+            this.el = el;
+          }}&gt;
+          &lt;source src={`../media/${src}.webm`} type="video/webm" /&gt;
+          &lt;source src={`../media/${src}.mp4`} type="video/mp4" /&gt;
+          &lt;source src={`../media/${src}.ogg`} type="video/ogg"/&gt;
+        &lt;/Video&gt;
+
+        &lt;VideoCtrls&gt;
+          &lt;div&gt;
+            {!this.state.playing
+              ? &lt;Touchable onClick={() => this.play()}>
+                    &lt;i className="icon ion-ios-play" /&gt;
+                &lt;/Touchable&gt;
+              : &lt;Touchable onClick={() => this.stop()}&gt;
+                    &lt;i className="icon ion-ios-pause" /&gt;
                   &lt;/Touchable&gt;
                 }
-           &lt;/div&gt;
-         &lt;/VideoCtrls&gt;
+          &lt;/div&gt;
+          &lt;div&gt;
+            {!this.state.muted
+              ? &lt;Touchable onClick={() => this.mute()}&gt;
+                  &lt;i className="icon ion-android-volume-off"/&gt;
+                &lt;/Touchable&gt;
+              : &lt;Touchable onClick={() => this.unmute()}&gt;
+                  &lt;i className="icon ion-android-volume-up"/&gt;
+                &lt;/Touchable&gt;
+              }
+          &lt;/div&gt;
+        &lt;/VideoCtrls&gt;
 
-       &lt;/VideoCtn&gt;
-      );
-    }
+      &lt;/VideoCtn&gt;</strong>
+    );
   }
-  
-  export default Video;
+}
+
+export default Video;
 
 <strong class="c---">
-  const VideoCtn = styled.div`
-    position: relative;
-    padding-bottom:${props => props.tv ? '75%' : '56.25%'};
-    height: 0;
-  `;
+const VideoCtn = styled.div`
+  position: relative;
+  padding-bottom:${props => props.tv ? '75%' : '56.25%'};
+  height: 0;
+`;
 
-  const Video = styled.video`
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  `;
+const Video = styled.video`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+`;
 
-  const VideoCtrls = styled.div`
-    position: absolute;
-    width: 100%;
-    left: 0;
-    height:2.5rem;
-    bottom: -2.5rem;
-    z-index: 10;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:0 .5rem;
-    background-color:#ddd;
-  `;
-
-  const Touchable = styled.button`
-    cursor:pointer;
-    touch-action: manipulation;
-    -webkit-appearance: button;
-    
-    & > i {
-      font-size: 2rem;
-      color:#222;
-      pointer-events: none;
-    }
-  `;</strong>
+const VideoCtrls = styled.div`
+  position: absolute;
+  width: 100%;
+  left: 0;
+  height:2.5rem;
+  bottom: -2.5rem;
+  z-index: 10;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 .5rem;
+  background-color:#ddd;
+`;</strong>
   </pre>
 </code>
 
