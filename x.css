@@ -92,8 +92,15 @@ p{
     background-color: #5c41ec ;
     border-radius:.2rem;
     padding:1rem .5rem;
+    font-size:.9;
+  }
+  @media (min-width: 992px) {
+  pre{
+    
     font-size:1.2rem;
   }
+}
+
   pre+pre{
     padding:.5rem .5rem;
   }
