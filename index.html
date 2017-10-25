@@ -75,7 +75,7 @@ export default () => (
 )</pre>
 </code>
 
-<p>We had a txt.js file under  <span class="txt-bold">/widgets</span> with some of these:</p>
+<p>We had a txt.js file under <span class="txt-bold">/widgets</span> with some of these:</p>
 
 <code><pre class="c">
 export const Touchable = ({ children }) => {
@@ -103,106 +103,78 @@ export const FontMegrim = ({ children, uppercase, typeScale }) => {
 </code>
 
 <p>No need to reference a .class on a immutable/utilities CSS file, the goal always was self containtment and minimizing the amount of files in big projects.</p>
-<p>Thing is, we can do better and have it all right here right now.</p>
 
-<code><pre class="c">
-import styled, { css,keyframes } from 'styled-components';
+<p>My current txt.js file turned into <span class="txt-bold">bootstrap</span> and looks painfully empty, 2 Lo-Fi components will rule your world. </p>
 
-export default () => (
-  &lt;div&gt;
-  
-    &lt;Paragraph <strong class="c---">tint="red" uppercase</strong>&gt;
-      Hello World
-    &lt;/Paragraph&gt;
+<code><pre class="c">import styled, { css, keyframes } from "styled-components";
 
-    &lt;Paragraph&gt;
-    &lt;Word tint="#999"&gt; Hello &lt;/Word&gt; &lt;Bold&gt;World&lt;/Bold&gt;
-    &lt;/Paragraph&gt;
-
-  &lt;/div&gt;
-)</pre>
-<pre class="c-">
-<strong class="c---">const Paragraph = styled.p.attrs({
+export const Paragraph = styled.p.attrs({
   color: props => props.tint || "#444"
 })`
-  text-transform: ${props => (props.uppercase ? "uppercase" : "none")};
   color: ${props => props.tint};
-`;</strong>
-const Bold = styled.span`
-  font-weight:bold;
-`;
-const Uppercase = styled.span`
-  text-transform:uppercase;
-`;
-const Word = styled.span.attrs({
-  color: props => props.tint || "#444"
-})`
-color: ${props => props.tint};
-`;</pre>
-</code>
-
-<p>Moar Lo-Fi styled components you can use: </p>
-
-<code><pre class="c-">
-const TextEllipsis = styled.p`
-  max-width: 100%;
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
-  word-wrap: normal !important;
+  font-weight: ${props => (props.bold ? "bold" : "normal")};
+  text-transform: ${props => (props.uppercase ? "uppercase" : "none")};
+  ${props => props.vertical && css`writing-mode: vertical-lr;`};
+  ${props =>
+    props.elipsis &&
+    css`
+      max-width: 100%;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+      word-wrap: normal !important;
+    `};
 `;
 
-const VerticalText = styled.p`
-  writing-mode: vertical-lr;
-`;</pre>
-</code>
+export const Word = Paragraph.withComponent("span");
 
-<p>Color variations on buttons and force links to appear like buttons is one of the oldest fights. Now we can win it swiftly.</p>
-<p>Styled-components' <span class="txt-bold">withComponent</span> and  <span class="txt-bold">extend</span> methods are all you'll ever need to make contextual changes without adding specificity by creating #id > descendant relationships on a CSS file ever again.</p>
-
-<code><pre>
-<strong class="c-">
-const fadeIn = keyframes`
-  0% {
+<strong class="c---">const fadeIn = keyframes`
+    0% {
     opacity: 0;
-  }
-  100% {
+    }
+    100% {
     opacity: 1;
-  }
+    }
 `;
 
-const Touchable = styled.button`
+export const Touchable = styled.button`
   animation: 1s ${fadeIn} ease-out;
-  cursor:pointer;
+  cursor: pointer;
   touch-action: manipulation;
-  -webkit-appearance: button;
-  
+  appearance: none;
+  background-color: #ddd;
+  padding: 0.5rem 1rem;
+  border: none;
+  font-size: 1rem;
+
   & > * {
     pointer-events: none;
   }
 `;
 
-const TouchableBranded = Touchable.extend`
-  color:#fff;
-  background: pink;
+export const Link = Touchable.withComponent("a");
+export const LinkUnderline = Link.extend`text-decoration: underline;`;</strong></pre></code>
 
-  &:hover {
-    opacity:.8;
-  }
-`;</strong>
-<strong class="c---">
-const Link = Touchable.withComponent('a')
+<p>Most scenarios regarding text styling can be achieved with props and choose proper tag (p or span).</p>
+<p>Styled-components' <span class="txt-bold">withComponent</span> and <span class="txt-bold">extend</span> methods are all you'll ever need to make contextual changes without adding specificity by creating #id > descendant relationships on a CSS file ever again.</p>
+<p>Color variations on buttons and force links to appear like buttons is one of the oldest fights. Now we can win it swiftly.</p>
 
-const LinkUnderline = Link.extend`
-  text-decoration:underline;
-`;</strong>
-</pre>
-</code>
-<p>And use it:</p>
-<code><pre class="c">
+<code>
+<pre class="c">import {
+    Paragraph,
+    Word,
+    Touchable,
+    Link,
+    LinkUnderline
+  } from "../widgets/bootstrap";
+
   export default () => (
     &lt;div&gt;
     
+      &lt;Paragraph <strong class="c---">uppercase bold tint="red"</strong>&gt;
+        Hello World
+      &lt;/Paragraph&gt;
+  
       &lt;Touchable 
       onClick={e => console.log(e)}&gt; 
         Normal Touchable 
@@ -220,12 +192,91 @@ const LinkUnderline = Link.extend`
       &lt;LinkUnderline href="/"&gt;
         Link with Underline 
       &lt;/LinkUnderline&gt;
-    
-    &lt;/div&gt;
-  )</pre>
-</code>
 
-<p>We could style the Touchables above with props but to make things a bit more easy to come back to it unless they are obvious I don't mind writing a bit more. I was one of those who could never tell if a color was 'secondary' or 'calm'...</p>
+      <strong class="c---">&lt;TouchableDelete&gt;
+      &lt;Word tint="#999" uppercase bold&gt; Delete &lt;/Word&gt; now
+      &lt;/TouchableDelete&gt;</strong>
+  
+    &lt;/div&gt;
+  )
+
+<strong class="c---">const TouchableDelete = Touchable.extend`
+  color: #fff;
+  background: red;
+  &:hover {
+    opacity: 0.8;
+  }
+`;</strong>
+</pre></code>
+
+<p>If a particular view needs some custom styles you can extend the one imported from <span class="txt-bold">/bootstrap</span>. Magic.</p>
+
+
+<p>Let's look at one piece of UI that reads like a poem so that you understand my joy. Let's get intimate and build a user widget like those you can find on games. <span class="txt-bold">Super cool</span>.</p>
+
+<code>
+  <pre class="c">import { Paragraph, } from "../widgets/bootstrap";
+    
+  export default () => (
+    &lt;div&gt; 
+
+      &lt;div&gt; 
+        &lt;Placeholder/&gt; 
+        &lt;Placeholder/&gt; 
+      &lt;/div&gt; 
+
+        &lt;UserCard&gt;
+            &lt;Icon viewBox="0 0 16 16"&gt;
+              &lt;path d="M3 1.5 L3 14.5 L14.258330249197702 8 z" /&gt;
+            &lt;/Icon&gt;
+            &lt;UserLevel&gt; 10 &lt;/UserLevel&gt;
+            &lt;UserName elipsis&gt; abcdefghijklmnopqrstuvwxyz &lt;/UserName&gt;
+        &lt;/UserCard&gt;
+      
+      &lt;div&gt; 
+        &lt;Placeholder/&gt; 
+        &lt;Placeholder/&gt; 
+      &lt;/div&gt; 
+      
+    &lt;/div&gt; 
+      
+  )
+
+<strong class="c---">const UserCard = styled.div`
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    background: papayawhip;
+    color: palevioletred;
+    width: 20vw;
+    height: 200px;
+    margin: 2rem auto;
+  `;
+  
+  const Icon = styled.svg`
+    transition: fill 0.25s;
+    width: 48px;
+    height: 48px;
+    transform: rotate(90deg);
+    ${UserCard}:hover & {
+      fill: rebeccapurple;
+    }
+  `;
+  
+  const UserLevel = Paragraph.extend`
+    font-size: 1.6rem;
+    flex-grow: 0;
+    margin-left: 1rem;
+    margin-right: 1rem;
+  `;
+  
+  const UserName = Paragraph.extend`
+    font-size: 0.9rem;
+    flex-grow: 1;
+  `;
+  </strong>
+    </pre></code>
+
 <p>As you contemplate the Way let's consider a classic piece of UI and marvel ourselves on how close to real CSS styled-components feels right now. Most of it works, no need to ditch fav old tricks like <span class="txt-bold">:not(:last-of-type)</span>.</p>
 
 <code><pre>
