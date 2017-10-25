@@ -122,9 +122,11 @@ export default () => (
   &lt;/div&gt;
 )</pre>
 <pre class="c-">
-<strong class="c---">const Paragraph = styled.p`
-  color: ${props => props.tint ? tint : '#444'};
-  text-transform: ${props => props.uppercase ? 'uppercase' : 'none'};
+<strong class="c---">const Paragraph = styled.p.attrs({
+  color: props => props.tint || "#444"
+})`
+  text-transform: ${props => (props.uppercase ? "uppercase" : "none")};
+  color: ${props => props.tint};
 `;</strong>
 const Bold = styled.span`
   font-weight:bold;
@@ -132,8 +134,10 @@ const Bold = styled.span`
 const Uppercase = styled.span`
   text-transform:uppercase;
 `;
-const Word = styled.span`
-  color: ${props => props.tint ? tint : '#444'};
+const Word = styled.span.attrs({
+  color: props => props.tint || "#444"
+})`
+color: ${props => props.tint};
 `;</pre>
 </code>
 
