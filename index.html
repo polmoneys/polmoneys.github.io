@@ -11,100 +11,11 @@
 <body>
   <img src="./logo.png" class="logo"/>
 <p><span class="txt-alert">'The first requirement of The Economist is that it should be readily understandable. Clarity of writing usually follows clarity of thought.'</span> - The Economist style Guide.</p>
-<p>What a time to be alive, this text is a work in progress.</p>
 <p>I'm all in with <a href="http://styled-components.com">styled-components</a> and couldn't be happier, it just makes the developer experience much better.</p>
 
+<p>At work we are trilingual so a good developer experience equals natural read/write operations on files. </p>
 
-<p>We've done fine with preprocessors and a bunch of utility CSS files, imagine divs with flexbox classes as <span class="txt-bold">'col-center justify-content-center align-items-center'</span>, and react-media to render chunks of markup at diferent breakpoints.  </p>
-
-
-
-
-<p>It was the first step towards minimizing CSS and the hassle of naming classes (at work we are trilingual).</p>
-
-<code><pre class="c">
-import React, { Component, PropTypes } from "react";
-<strong class="c--">import Media from 'react-media';</strong>
-import Footer from './widgets/footer';
-import FooterMobile from './widgets/footer-mobile';
-
-class App extends Component {
-  render() {
-    return (
-      &lt;Media query="(min-width: 992px)"&gt;
-        {matches =>
-          matches
-            ? &lt;div&gt;
-            <strong class="c--"> &lt;Footer /&gt;</strong>
-              &lt;/div&gt;
-            : &lt;div&gt;
-            <strong class="c--"> &lt;FooterMobile /&gt;</strong>
-              &lt;/div&gt;
-          }
-      &lt;/Media&gt;
-    )
-  }
-}    
-</pre>
-</code>
-
-<p>The trend was there, try to make self contained widgets with inmutable CSS classes and one Javascript object with styles to avoid polluting a CSS file with one-use <span class="txt-bold">#id or .class</span>.</p>
-<p>We had a txt.js file under <span class="txt-bold">/widgets</span> with some of these:</p>
-
-<code><pre class="c">
-export const Bold = ({ children }) => {
-  <strong class="c--">
-  const styles = {
-      fontWeight: 700
-    };</strong>  
-<strong class="c">
-    return (
-        &lt;span style={styles}&gt;
-        {children}
-        &lt;/span&gt;
-    );
-  };</strong>
-
-export const Touchable = ({ children }) => {
-  const styles = {
-    cursor: "pointer"
-  };
-  return (
-      &lt;span style={styles}&gt;
-      {children}
-      &lt;/span&gt;
-  );
-};
-
-export const FontMegrim = ({ children, uppercase, typeScale }) => {
-  const styles = {
-    fontFamily: "Megrim, cursive",
-    textTransform: uppercase ? "uppercase" : "none"
-  };
-  return (
-    &lt;span style={styles} className={typeScale}&gt;
-      {children}
-    &lt;/span&gt;
-  );
-}; 
-</pre>
-</code>
-<p>Our goal was to avoid a reference to a .class on a immutable/utilities CSS file and start with a blank canvas.</p>
-
-<p>To use it, just plug and play:</p>
-
-<code><pre class="c">
-import { Bold } from "../widgets/txt";
-
-export default () => (
-  &lt;div&gt;
-  &lt;p&gt;Hello, &lt;Bold&gt;bold&lt;/Bold&gt;&lt;/p&gt;
-  &lt;/div&gt;
-)</pre>
-</code>
-
-
-<p>With Styled-components in play txt.js file evolved into <span class="txt-bold">bootstrap.js</span> and looks painfully empty, 2 Lo-Fi components to rule your world. </p>
+<p>With Styled-components in play we start our projects with bootstrap.js, a single file that looks painfully empty.<span class="txt-bold"> 2 Lo-Fi components to rule your world</span>. </p>
 
 <code><pre class="c">export const Paragraph = styled.p.attrs({
   color: props => props.tint || "#444"
@@ -204,10 +115,11 @@ export const LinkUnderline = Link.extend`text-decoration: underline;`;</strong><
 
 <p>If a particular view needs some custom styles you can extend one of the Lo-Fi components from bootstrap.js.<span class="txt-bold"> Magic</span>.</p>
 
-<p>As now we are in control of context read/write operations are full of joy. Let's get intimate and build a user widget like those you can find on games.</p>
+<p>As now we are in control of context, read/write operations, be it styling changes or maintenance, are a source of joy, not pain.</p>
+<p>Let's get intimate and build a user widget like those you can find on games without touching a CSS file.</p>
 
 <code>
-  <pre class="c">import { Paragraph, } from "../widgets/bootstrap";
+  <pre class="c">import { Paragraph } from "../widgets/bootstrap";
     
   export default () => (
     &lt;div&gt; 
