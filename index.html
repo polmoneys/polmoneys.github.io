@@ -19,14 +19,13 @@
 
 <code><pre class="c">export const Paragraph = styled.p.attrs({
   color: props => props.tint || "#444"
-})`
+  })`
   color: ${props => props.tint};
   font-weight: ${props => (props.bold ? "bold" : "normal")};
   text-transform: ${props => (props.uppercase ? "uppercase" : "none")};
   ${props => props.vertical && css`writing-mode: vertical-lr;`};
   ${props =>
-    props.elipsis &&
-    css`
+    props.elipsis && css`
       max-width: 100%;
       overflow: hidden !important;
       text-overflow: ellipsis !important;
@@ -77,33 +76,32 @@ export const LinkUnderline = Link.extend`text-decoration: underline;`;</strong><
     LinkUnderline
   } from "../widgets/bootstrap";
 
-  export default () => (
-    &lt;div&gt;
-    
-      &lt;Paragraph <strong class="c---">uppercase bold tint="red"</strong>&gt;
-        Hello World
-      &lt;/Paragraph&gt;
+export default () => (
+  &lt;div&gt;
   
-      &lt;Touchable 
-      onClick={e => console.log(e)}&gt; 
-        Normal Touchable 
-      &lt;/Touchable&gt;
-  
-      &lt;Link href="/"&gt;
-        Normal Link 
-      &lt;/Link&gt;
-  
-      &lt;LinkUnderline href="/"&gt;
-        Link with Underline 
-      &lt;/LinkUnderline&gt;
+    &lt;Paragraph <strong class="c---">uppercase bold tint="red"</strong>&gt;
+      Hello World
+    &lt;/Paragraph&gt;
 
-      <strong class="c---">&lt;TouchableDelete&gt;
-      &lt;Word tint="#999" uppercase bold&gt; Delete &lt;/Word&gt; now
-      &lt;/TouchableDelete&gt;</strong>
-  
-    &lt;/div&gt;
-  )
+    &lt;Touchable 
+    onClick={e => console.log(e)}&gt; 
+      Normal Touchable 
+    &lt;/Touchable&gt;
 
+    &lt;Link href="/"&gt;
+      Normal Link 
+    &lt;/Link&gt;
+
+    &lt;LinkUnderline href="/"&gt;
+      Link with Underline 
+    &lt;/LinkUnderline&gt;
+
+    <strong class="c---">&lt;TouchableDelete&gt;
+    &lt;Word tint="#999" uppercase bold&gt; Delete &lt;/Word&gt; now
+    &lt;/TouchableDelete&gt;</strong>
+
+  &lt;/div&gt;
+)
 <strong class="c---">const TouchableDelete = Touchable.extend`
   color: #fff;
   background: red;
@@ -121,31 +119,29 @@ export const LinkUnderline = Link.extend`text-decoration: underline;`;</strong><
 <code>
   <pre class="c">import { Paragraph } from "../widgets/bootstrap";
     
-  export default () => (
+export default () => (
+  &lt;div&gt; 
+
     &lt;div&gt; 
-
-      &lt;div&gt; 
-        &lt;SomeContent/&gt; 
-        &lt;SomeContent/&gt; 
-      &lt;/div&gt; 
-
-        &lt;UserCard&gt;
-            &lt;Icon viewBox="0 0 16 16"&gt;
-              &lt;path d="M3 1.5 L3 14.5 L14.258330249197702 8 z" /&gt;
-            &lt;/Icon&gt;
-            &lt;UserLevel&gt; 10 &lt;/UserLevel&gt;
-            &lt;UserName elipsis&gt; James Bond &lt;/UserName&gt;
-        &lt;/UserCard&gt;
-      
-      &lt;div&gt; 
-        &lt;SomeContent/&gt; 
-        &lt;SomeContent/&gt; 
-      &lt;/div&gt; 
-      
+      &lt;SomeContent/&gt; 
+      &lt;SomeContent/&gt; 
     &lt;/div&gt; 
-      
-  )
 
+      &lt;UserCard&gt;
+          &lt;Icon viewBox="0 0 16 16"&gt;
+            &lt;path d="M3 1.5 L3 14.5 L14.258330249197702 8 z" /&gt;
+          &lt;/Icon&gt;
+          &lt;UserLevel&gt; 10 &lt;/UserLevel&gt;
+          &lt;UserName elipsis&gt; James Bond &lt;/UserName&gt;
+      &lt;/UserCard&gt;
+    
+    &lt;div&gt; 
+      &lt;SomeContent/&gt; 
+      &lt;SomeContent/&gt; 
+    &lt;/div&gt; 
+    
+  &lt;/div&gt; 
+)
 <strong class="c---">const UserCard = styled.div`
     display: flex;
     align-items: center;
@@ -155,30 +151,29 @@ export const LinkUnderline = Link.extend`text-decoration: underline;`;</strong><
     width: 20vw;
     height: 200px;
     margin: 2rem auto;
-  `;
+`;
   
-  const Icon = styled.svg`
-    transition: fill 0.25s;
-    width: 48px;
-    height: 48px;
-    transform: rotate(90deg);
-    ${UserCard}:hover & {
-      fill: rebeccapurple;
-    }
-  `;
+const Icon = styled.svg`
+  transition: fill 0.25s;
+  width: 48px;
+  height: 48px;
+  transform: rotate(90deg);
+  ${UserCard}:hover & {
+    fill: rebeccapurple;
+  }
+`;
   
-  const UserLevel = Paragraph.extend`
-    font-size: 1.6rem;
-    flex-grow: 0;
-    margin-left: 1rem;
-    margin-right: 1rem;
-  `;
+const UserLevel = Paragraph.extend`
+  font-size: 1.6rem;
+  flex-grow: 0;
+  margin-left: 1rem;
+  margin-right: 1rem;
+`;
   
-  const UserName = Paragraph.extend`
-    font-size: 0.9rem;
-    flex-grow: 1;
-  `;
-  </strong>
+const UserName = Paragraph.extend`
+  font-size: 0.9rem;
+  flex-grow: 1;
+`;</strong>
 </pre></code>
 <p>It reads like a poem and it does not need much from the outside world, it's a self explanatory file.   </p>    
 <p>As you contemplate the Way let's consider a classic piece of UI and marvel ourselves on how close to real CSS styled-components feels right now. Most of it works, no need to ditch fav old tricks like <span class="txt-bold">:not(:last-of-type)</span>.</p>
@@ -352,9 +347,8 @@ const VideoCtrls = styled.div`
 
 <p>We had little time so we hack the devices with CSS (I now know better than to lose myself browsing The Noun Project).</p>
 
-<code><pre>
-  <strong class="c">
-class CreateBug extends Component {
+<code>
+<pre><strong class="c">class CreateBug extends Component {
   state = {
     device: "phone",
   };      
@@ -458,7 +452,7 @@ const Tablet = Mobile.extend`
 <strong class="c---">
   ${props => props.pressed && css`background-color: red;`};
   ${props => props.landscape && css`transform: rotate(90deg);`}
-  `;</strong>
+`;</strong>
 <strong class="c--">
 const Desktop = styled.span`
   position: relative;
@@ -491,7 +485,7 @@ const Desktop = styled.span`
   }</strong>
   <strong class="c---">
   ${props => props.pressed && css`background-color: red;`};
-  `;</strong></pre>
+`;</strong></pre>
 </code>
 
 <p>You could atomize things more and make renderDeviceSelector a component with it's own file, do what you feel is best, find your balance. In my experience, the bigger the project, the more I hate naming files, importing them, switching folders...mental debt for the future self.</p>
